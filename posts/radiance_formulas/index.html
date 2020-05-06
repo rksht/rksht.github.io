@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Radiance formulas - Patient Boy</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="Radiance formulas" />
+<meta property="og:description" content="Preliminary Differential solid angle = $dω = \sin{\theta} \space dθ \space dϕ$
+A solid angle is an integral quantity. Multiple collections of directions can have the same solid angle measure.
+ &ldquo;Power&rdquo; without any extra &ldquo;per something&rdquo; is not a super useful quantity.
+Power entering or leaving a surface $\Phi$ is an integral quantity denoting the total power measured on the surface area of an object.
+So we are indeed associating power with area." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rksht.github.io/posts/radiance_formulas/" />
+<meta property="article:published_time" content="2020-01-20T06:57:03+05:30" />
+<meta property="article:modified_time" content="2020-01-20T06:57:03+05:30" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Radiance formulas"/>
+<meta name="twitter:description" content="Preliminary Differential solid angle = $dω = \sin{\theta} \space dθ \space dϕ$
+A solid angle is an integral quantity. Multiple collections of directions can have the same solid angle measure.
+ &ldquo;Power&rdquo; without any extra &ldquo;per something&rdquo; is not a super useful quantity.
+Power entering or leaving a surface $\Phi$ is an integral quantity denoting the total power measured on the surface area of an object.
+So we are indeed associating power with area."/>
+
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="screen" href="rksht.github.iocss/main.css" />
+
+	<script
+  type="text/javascript"
+  async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+</head><body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="rksht.github.io">Patient Boy</a>
+	</div>
+	<nav>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">Radiance formulas</h1>
+			<div class="meta">Posted on Jan 20, 2020</div>
+		</div>
+		
+
+		<section class="body">
+			<h2 id="preliminary">Preliminary</h2>
+<p>Differential solid angle = $dω = \sin{\theta} \space dθ \space dϕ$</p>
+<p>A solid angle is an integral quantity. Multiple collections of directions can have the same solid angle measure.</p>
+<hr>
+<p><em>&ldquo;Power&rdquo;</em> without any extra &ldquo;per something&rdquo; is not a super useful quantity.</p>
+<p>Power entering or leaving a surface $\Phi$ is an integral quantity denoting the total power measured on the surface area of an object.</p>
+<p>So we are indeed associating power with area.</p>
+<p>Irradiance is power entering per area. Exitance is power leaving per area.</p>
+<p>Mathematically we can say that if power is continuous over the surface area,</p>
+<p>$$
+E = \frac{\Delta \Phi}{\Delta A}
+$$</p>
+<p>(where $\Delta A \rightarrow 0$)</p>
+<p>I am omitting the $\Delta \lambda$ from the denominator also. All these quantities are spectral quantities, i.e. they also vary over wavelength, so it&rsquo;s &ldquo;irradiance = power per area per wavelength&rdquo;.</p>
+<p>Radiance is power per area, per solid angle, per wavelength.</p>
+<hr>
+<h2 id="lamberts-cosine-law">Lambert&rsquo;s cosine law</h2>
+<p>It starts with power Φ incident on the surface. Always. Then you get irradiance</p>
+<p>$E = \Phi / A$</p>
+<p>I could write $dE = d\Phi / dA$, but I&rsquo;m not gonna. That&rsquo;s too math-y.</p>
+<p>Irradiance is always measured from the point of view of the normal of the differential area. So we don&rsquo;t <em>need</em> to put a cosine term there. Other way to look at it is that the &lsquo;viewing direction&rsquo; $\hat{ω_o}$ is just the normal itself i.e $\hat{\omega_o} = \hat{n}$.  So $\theta = 0$, and we don&rsquo;t need to put the cosine in the formula.</p>
+<p>But radiance is almost always going to be measured from arbitrary &ldquo;look from&rdquo; directions. The area of the surface that we are looking has a different area measure from this point of view. Remember, the set of points we are looking at is the same, the measure however is different.</p>
+<p>$R 	= d\Phi  / (dA * cos(\theta) * dW) = dE / (cos(\theta) * dW)$</p>
+<p>Which means,</p>
+<p>$dE = R * cos(\theta) * dW$</p>
+<p>where $W$ is the solid angle measure of the domain of directions we are interested in looking from. Texts also use $\sigma$, but I like $W$. The particular domain of directions used depends on the usage. For an opaque surface the domain is a hemisphere at the point with its axis being the normal. For a free point in space it&rsquo;s the full sphere of directions. So basically every direction from where light rays can arrive at the point.</p>
+<hr>
+<h2 id="the-only-time-i-will-write-the-rendering-equation-and-make-some-things-clear-about-the-notation">The only time I will write the rendering equation and make some things clear about the notation</h2>
+<p>$$
+L_\mathit{out}(\hat{\omega_\mathit{out}} ← \tilde{x}) = \int_{\omega_i ∈ \Omega}{
+f(\hat{\omega_{out}} ← \hat{\omega_{in}}) \space
+L_\mathit{in}(\omega_\mathit{in} → \tilde{x}) \space
+(\hat{n}(\tilde{x}) ∙ \hat{\omega_{in}}) \space d\hat{\omega_{in}}
+}
+$$</p>
+<p>Using <em>cos θ</em> instead of the dot product</p>
+<p>$$
+L_\mathit{out}(\hat{\omega_\mathit{out}} ← \tilde{x}) = \int_{\omega_i ∈ \Omega}{
+f(\hat{\omega_{out}} ← \hat{\omega_{in}}) \space
+L_\mathit{in}(\omega_\mathit{in} → \tilde{x}) \space
+(\cos{\theta_i}) \space d\hat{\omega_{in}}
+}
+$$</p>
+<p>Now, writing $in$ and $out$ is obviously clearer than $i$ and $o$, especially since $i$ is often used as an index. So $\omega_{in}$ and $\omega_{out}$ are altogether different variables. In the following, I will be using $i$ and $o$ for in and out, and $k$ for the sample number.</p>
+<p>Note that the angle $\theta_i$ is <strong>the polar angle</strong> since we will choose the normal as the local z axis, and $\theta_i$ the angle between the normal and the incoming light.</p>
+<h2 id="directional-hemi-reflectance-and-hemi-directional-reflectance">Directional-Hemi reflectance and Hemi-Directional Reflectance</h2>
+<pre><code>R(ω_o⃗) = power outgoing in direction ω_o
+         -------------------------------
+         power incoming from all directions over the hemisphere
+</code></pre><p>Directional-Hemi reflectance is that ratio. Another expression that computes $R(\vec{\omega_o})$ is</p>
+<p>$R(\hat{\omega_o}) = \int{f(\omega_o \leftarrow \omega_i) \cos \theta_i d\omega_i}$</p>
+<p>For a perfectly diffuse surface, $R$ is constant, and so is $f$. The relation is that if $R = r$ then $f = r/\pi$. See Shirley for the derivation, but it&rsquo;s pretty easy really.</p>
+<hr>
+<h2 id="lambertian-reflectance">Lambertian reflectance</h2>
+<p>Shirley keeps saying that perfect lambertian has a cos term in it, but that is just due to the cos term in the integrand of equation.</p>
+<p>So a bit of formalism is in order. Given a point $\tilde{x}$ and an out direction $\hat{\omega_o}$ and $P$ as the distribution used to sample directions from, a <strong>single sample</strong> (i.e. summand) of the Monte Carlo sum is like so,</p>
+<p>$$
+\frac{f(\omega_o \leftarrow \omega_i) L(\tilde{x} \leftarrow \hat{\omega_i}) (\hat{n}_{\tilde{x}} \bullet \hat{\omega_i})}{P(\hat{\omega_i})}
+$$</p>
+<p>Here, $\omega_i$ is the in direction that needs to be generated randomly. The expression however tells us that we also need to put in the <em>value</em> of the probability of $\hat{\omega_i}$ i.e. $P(\omega_i)$.</p>
+<p>Shirley&rsquo;s first recommendation is to use the following distribution</p>
+<p>$$
+P(\omega_i) = \frac{f(\omega_o \leftarrow \omega_i) \cos{\theta_i}}{R(\omega_o)}
+$$</p>
+<p>where $R$ is the hemispherical directional reflectance. Do confirm that $P$ is a normalized distribution (and hence, a <em>probability distribution</em>) Easy to check especially since you know $R(\omega_o) = \pi f = r$ Constants they both are - $R$ and $f$.</p>
+<p>When we substitute into the summand expression, we see that it reduces to</p>
+<p>$$
+L(\tilde{x} \leftarrow \omega_i) R(\omega_o)
+$$</p>
+<p>Anyway, this avoids the need to put in the probability value.</p>
+<p>Second question is how to actually sample some $\omega_i$ from this distribution. Recall that, if you substitude the value of Lambertian $R$ and $f$,</p>
+<p>$$
+P(\omega_i) = \cos \theta_i / \pi
+$$</p>
+<p>Now comes the part where we compute inverse of the CDF of $P$. Not particularly interesting but worth doing I guess. See <a href="%7Bfilename%7Dderivation_of_cosine_distrib.md">my derivation</a>.</p>
+<h2 id="explicit-direction-sampling">Explicit direction sampling</h2>
+<p>TODO.</p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr>⚡️
+	2020  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+
+
+</div>
+    </body>
+</html>

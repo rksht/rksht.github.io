@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Haskell ramblings - Patient Boy</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="Haskell ramblings" />
+<meta property="og:description" content="Some silly comments
+  Terseness: Although it can be overdone, you can write terse yet readable code.
+  Monads:
+ Value producers with outgoing valves? Yes, &ldquo;valves&rdquo;. A type that implements a function called bind which should know how to pump values into a continuation? That&rsquo;s about it    Monad transformers:
+ A value producer that you get by connecting two or more value producers?    Do notation:" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rksht.github.io/posts/haskell/" />
+<meta property="article:published_time" content="2020-01-12T06:57:03+05:30" />
+<meta property="article:modified_time" content="2020-01-12T06:57:03+05:30" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Haskell ramblings"/>
+<meta name="twitter:description" content="Some silly comments
+  Terseness: Although it can be overdone, you can write terse yet readable code.
+  Monads:
+ Value producers with outgoing valves? Yes, &ldquo;valves&rdquo;. A type that implements a function called bind which should know how to pump values into a continuation? That&rsquo;s about it    Monad transformers:
+ A value producer that you get by connecting two or more value producers?    Do notation:"/>
+
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="screen" href="rksht.github.iocss/main.css" />
+
+	<script
+  type="text/javascript"
+  async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+</head><body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="rksht.github.io">Patient Boy</a>
+	</div>
+	<nav>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">Haskell ramblings</h1>
+			<div class="meta">Posted on Jan 12, 2020</div>
+		</div>
+		
+
+		<section class="body">
+			<p>Some silly comments</p>
+<ol>
+<li>
+<p>Terseness: Although it can be overdone, you can write terse yet readable code.</p>
+</li>
+<li>
+<p>Monads:</p>
+<ul>
+<li>Value producers with outgoing valves? Yes, &ldquo;valves&rdquo;.</li>
+<li>A type that implements a function called bind which should know how to pump values into a continuation?</li>
+<li>That&rsquo;s about it</li>
+</ul>
+</li>
+<li>
+<p>Monad transformers:</p>
+<ul>
+<li>A value producer that you get by connecting two or more value producers?</li>
+</ul>
+</li>
+<li>
+<p>Do notation:</p>
+<ul>
+<li>Think <code>async</code>/<code>await</code> getting desuraged to promise <code>.then</code></li>
+</ul>
+</li>
+<li>
+<p>IO:</p>
+<ul>
+<li>A value producer that pumps/consumes values to/from outside Haskell</li>
+</ul>
+</li>
+<li>
+<p>Parser combinator libraries:</p>
+<ul>
+<li>Fun</li>
+</ul>
+</li>
+<li>
+<p>Typeclasses:</p>
+<ul>
+<li>Static interfaces</li>
+</ul>
+</li>
+<li>
+<p>Giant tree of thunks</p>
+<ul>
+<li>That gets evaluated as needed by IO action or pattern matching</li>
+</ul>
+</li>
+<li>
+<p>The <code>try</code> parser combinator</p>
+</li>
+</ol>
+<p>Without <code>try</code>, a parser &ldquo;fails&rdquo; only if it fails to consume the first
+character (i.e. takes the value of <code>fail</code> as defined in the Monad instance).
+Otherwise it will not be in a fail state and won&rsquo;t backtrack and your other
+branch in the <code>&lt;|&gt;</code> combinator won&rsquo;t be triggered.</p>
+<p>The combinator that enables you to have backtracking if you have written a
+grammar (and by way a parser) that requires <code>number of lookaheads &gt; 1</code>. If you
+can get by without using try, your set of parsers will correspond to an LL(1)
+grammar.</p>
+<p><code>try</code> can make it easy to extend parsers though, I guess.</p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr>⚡️
+	2020  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+
+
+</div>
+    </body>
+</html>

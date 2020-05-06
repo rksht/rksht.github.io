@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta name="generator" content="Hugo 0.69.2" />
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Patient Boy  </title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="alternate" type="application/rss+xml" href="rksht.github.io/index.xml" title="Patient Boy" />
+	<meta property="og:title" content="Patient Boy" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="rksht.github.io/" />
+<meta property="og:updated_time" content="2020-05-05T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Patient Boy"/>
+<meta name="twitter:description" content=""/>
+
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="screen" href="rksht.github.iocss/main.css" />
+
+	<script
+  type="text/javascript"
+  async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+</head>
+	<body>
+		<div class="content">
+			<header>
+	<div class="main">
+		<a href="rksht.github.io">Patient Boy</a>
+	</div>
+	<nav>
+		
+	</nav>
+</header>
+
+			
+			<main class="list">
+				<div class="site-description"></div>
+				
+				
+				
+				<section class="list-item">
+					<h1 class="title"><a href="rksht.github.io/posts/total_deriv/">What is a total derivative</a></h1>
+					<time>May 5, 2020</time>
+					<br><div class="description">
+						
+						Linear approximation We will only talk about scalar-valued functions.
+First we learn about linear approximation - what it exactly is.
+Look at a single-variable function $f : R \rightarrow R$. The linear approximation of this function at the point $x = a$, is defined as the function $L : R \rightarrow R$ such that
+$L(x) = f(a) + f&rsquo;(a) * (x - a)$
+Linear part is $A(x) = f&rsquo;(a)x$. So we could write it as $L(x) = f(a) + A(x - a)$&hellip;
+						
+					</div>
+					<a href="rksht.github.io/posts/total_deriv/">Read more ⟶</a>
+				</section>
+				
+				<section class="list-item">
+					<h1 class="title"><a href="rksht.github.io/posts/derivation_of_cosine_distrib/">Derivation an RNG following the cosine distribution</a></h1>
+					<time>Jan 20, 2020</time>
+					<br><div class="description">
+						
+						Using the inversion method.
+The CDF is
+$$ G(\theta, \phi) = \frac{\sin^2\theta}{2\pi} (\phi+\pi) $$
+We got two random variables that we need to sample $\theta$ and $\phi$.
+First, as per the technique, we compute $G_{max} ≡ G(\theta, \phi_{max})$ . Noting that $\phi_{max} = \pi$ we compute $G(\theta,\pi) = \sin^2\theta$.
+Now, if we generate a canonical random variable $r_j$, let $r_j = G(\theta_j,\pi)$, where $\theta_j$ stands for the sampled value of $\theta$.&hellip;
+						
+					</div>
+					<a href="rksht.github.io/posts/derivation_of_cosine_distrib/">Read more ⟶</a>
+				</section>
+				
+				<section class="list-item">
+					<h1 class="title"><a href="rksht.github.io/posts/radiance_formulas/">Radiance formulas</a></h1>
+					<time>Jan 20, 2020</time>
+					<br><div class="description">
+						
+						Preliminary Differential solid angle = $dω = \sin{\theta} \space dθ \space dϕ$
+A solid angle is an integral quantity. Multiple collections of directions can have the same solid angle measure.
+ &ldquo;Power&rdquo; without any extra &ldquo;per something&rdquo; is not a super useful quantity.
+Power entering or leaving a surface $\Phi$ is an integral quantity denoting the total power measured on the surface area of an object.
+So we are indeed associating power with area.&hellip;
+						
+					</div>
+					<a href="rksht.github.io/posts/radiance_formulas/">Read more ⟶</a>
+				</section>
+				
+				<section class="list-item">
+					<h1 class="title"><a href="rksht.github.io/posts/go/">Go ramblings</a></h1>
+					<time>Jan 12, 2020</time>
+					<br><div class="description">
+						
+						This is not inheritance.
+type GitGudder interface { GitGud() } type BaseStruct struct { // whatever } func (b *BaseStruct) GitGud() { // meh } type MyStruct struct { BaseStruct number int }  This is not inheritance. Although MyStruct implements the GitGudder interface, the BaseStruct in MyStruct knows nothing about the other fields in MyStruct. So it truly is composition. The GitGud() method on BaseStruct takes a pointer to BaseStruct, not MyStruct.&hellip;
+						
+					</div>
+					<a href="rksht.github.io/posts/go/">Read more ⟶</a>
+				</section>
+				
+				<section class="list-item">
+					<h1 class="title"><a href="rksht.github.io/posts/haskell/">Haskell ramblings</a></h1>
+					<time>Jan 12, 2020</time>
+					<br><div class="description">
+						
+						Some silly comments
+  Terseness: Although it can be overdone, you can write terse yet readable code.
+  Monads:
+ Value producers with outgoing valves? Yes, &ldquo;valves&rdquo;. A type that implements a function called bind which should know how to pump values into a continuation? That&rsquo;s about it    Monad transformers:
+ A value producer that you get by connecting two or more value producers?    Do notation:&hellip;
+						
+					</div>
+					<a href="rksht.github.io/posts/haskell/">Read more ⟶</a>
+				</section>
+				
+				<section class="list-item">
+					<h1 class="title"><a href="rksht.github.io/posts/limit_of_sequence/">Limit of a sequence (i.e. discrete limit)</a></h1>
+					<time>Jan 12, 2020</time>
+					<br><div class="description">
+						
+						In all this discussion, variables $n$ and $k$ will be positive integers.
+A sequence $S \equiv S(n)$ (denoted as $S_n$) where $n \in \mathbb{Z}^+$ is said to have a finite limit $a$ iff
+$$ \forall d \in \mathbb{R}^+, (\exists k \in \mathbb{Z}, (\forall n &gt; k, (|a - S_n| &lt; d))) $$
+From an adversary game point of view, no matter how small you choose d, you will find that $S_n$ never goes above $d$ after a certain point.&hellip;
+						
+					</div>
+					<a href="rksht.github.io/posts/limit_of_sequence/">Read more ⟶</a>
+				</section>
+				
+				<section class="list-item">
+					<h1 class="title"><a href="rksht.github.io/posts/dft/"></a></h1>
+					<time>Jan 1, 0001</time>
+					<br><div class="description">
+						
+						&hellip;
+						
+					</div>
+					<a href="rksht.github.io/posts/dft/">Read more ⟶</a>
+				</section>
+				
+				
+
+
+			</main>
+			<footer>
+<hr>⚡️
+	2020  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+
+
+
+		</div>
+		
+	</body>
+</html>

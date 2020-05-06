@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>What is a total derivative - Patient Boy</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="What is a total derivative" />
+<meta property="og:description" content="Linear approximation We will only talk about scalar-valued functions.
+First we learn about linear approximation - what it exactly is.
+Look at a single-variable function $f : R \rightarrow R$. The linear approximation of this function at the point $x = a$, is defined as the function $L : R \rightarrow R$ such that
+$L(x) = f(a) &#43; f&rsquo;(a) * (x - a)$
+Linear part is $A(x) = f&rsquo;(a)x$. So we could write it as $L(x) = f(a) &#43; A(x - a)$" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rksht.github.io/posts/total_deriv/" />
+<meta property="article:published_time" content="2020-05-05T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-05T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="What is a total derivative"/>
+<meta name="twitter:description" content="Linear approximation We will only talk about scalar-valued functions.
+First we learn about linear approximation - what it exactly is.
+Look at a single-variable function $f : R \rightarrow R$. The linear approximation of this function at the point $x = a$, is defined as the function $L : R \rightarrow R$ such that
+$L(x) = f(a) &#43; f&rsquo;(a) * (x - a)$
+Linear part is $A(x) = f&rsquo;(a)x$. So we could write it as $L(x) = f(a) &#43; A(x - a)$"/>
+
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="screen" href="rksht.github.iocss/main.css" />
+
+	<script
+  type="text/javascript"
+  async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+</head><body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="rksht.github.io">Patient Boy</a>
+	</div>
+	<nav>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">What is a total derivative</h1>
+			<div class="meta">Posted on May 5, 2020</div>
+		</div>
+		
+
+		<section class="body">
+			<h2 id="linear-approximation">Linear approximation</h2>
+<p>We will only talk about scalar-valued functions.</p>
+<p>First we learn about linear approximation - what it exactly is.</p>
+<p>Look at a single-variable function $f : R \rightarrow R$. The linear approximation of
+this function at the point $x = a$, is defined as the function $L : R \rightarrow R$ such
+that</p>
+<p>$L(x) = f(a) + f&rsquo;(a) * (x - a)$</p>
+<p>Linear part is $A(x) = f&rsquo;(a)x$. So we could write it as $L(x) = f(a) + A(x - a)$</p>
+<p>From this we see that <em>linear approximation</em> is just the first two terms of the
+Taylor series for the function. And you can see that $L$ is a linear function
+(well, affine really).</p>
+<p>Now, what does it <em>mean</em>? We have defined it constructively. But is there
+another way to define <strong>&ldquo;linear approximation&rdquo;</strong> by some property instead of
+directly giving a function definition (in this case, that RHS expression for
+$L$)?</p>
+<p>There is.</p>
+<p>A function $f : R^n \rightarrow R$ has a total derivative at a point $x = \vec{c}$ if,</p>
+<p>$$
+\exists A ∈ Linear(R^n \rightarrow R)
+$$</p>
+<p>such that</p>
+<p>$$
+L(x⃗, c⃗) = f(c⃗) + A(x⃗ - c⃗) \Longrightarrow \lim_{x⃗ \rightarrow c⃗} \frac{f(x⃗) - L(x⃗, c⃗)}{\left\lVert x⃗ - c⃗ \right\rVert} = 0
+$$</p>
+<p>Here $x⃗ \rightarrow c⃗$ means &ldquo;over all paths&rdquo; from $x⃗$ to $c⃗$.</p>
+<p>The issue is that there is no general way to get a linear approximation, it
+depends on the function $f$.</p>
+<p>For scalar-valued functions, if linear approximation is <em>defined</em> and the
+gradient is not $\vec{0}$, the product operator in A becomes a matrix multiplication, and
+$f&rsquo;(a)$ is replaced with the gradient vector at $\vec{a}^\intercal$ (it is transposed, so the
+multiplication is actually doing a dot prod).</p>
+<p>But wait. Why can&rsquo;t you use the gradient vector and say that $A = \nabla f$?</p>
+<p>That is because your idea of the gradient&rsquo;s existence is not correct, bruh.</p>
+<p>There&rsquo;s something called <a href="https://calculus.subwiki.org/wiki/Concept_of_equality_conditional_to_existence_of_one_side">conditional equality</a>.</p>
+<h2 id="coordinates-of-the-gradient-if-it-exists">Coordinates of the gradient <em>if it exists</em></h2>
+<p>First, we need the definition of the gradient. Turns out, the function $A$ above, if it does satisfy the linear approximation requirement, <em>is</em> the gradient. That&rsquo;s pretty much the definition of gradient.</p>
+<p>It&rsquo;s the function, if it exists, can ensure that we can linearly approximate $f$ and as per definition $f$ is differentiable, i.e. we can get a total derivative.</p>
+<p><em>If</em> the gradient exists at a point, it&rsquo;s coordinates will be the partial derivatives of $f$ at that point. This is what it means to</p>
+<p>$$
+\nabla f = \langle \frac{\partial f}{\partial x_1}, \frac{\partial f}{\partial x_2}, \ldots \frac{\partial f}{\partial x_n} \rangle
+$$</p>
+<p>Again, $\nabla f$ is not <em>defined</em> as the right hand side vector valued function.</p>
+<h2 id="tldr">TL;DR</h2>
+<p><strong>Gradient Exists</strong> $\Leftrightarrow$ <strong>Total differentiable</strong></p>
+<p><strong>Gradient Exists</strong> $\Rightarrow$ <strong>Gradient is a vector of partial derivatives</strong></p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr>⚡️
+	2020  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+
+
+</div>
+    </body>
+</html>
