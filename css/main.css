@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@1,500&display=swap');
 /* Markdown */
 :root{
---maincolor: red;
+--maincolor: #cc340e;
 --bordercl:rebeccapurple;
 --callouctcolor:dodgerblue;
 --hovercolor:navy;
@@ -103,11 +103,12 @@ figure h4::before {
 code {
   background-color: #f1f1f1;
   padding: .1em .2em;
+  font-family: 'Source Code Pro', monospace;
 }
 
 pre {
-  background-color: #ececec;
-  line-height: 1.4;
+  background-color: #fafbff;
+  line-height: 1.2;
   overflow-x: auto;
   padding: 1em;
 }
@@ -122,6 +123,7 @@ pre code {
   color: inherit;
   font-size: 100%;
   padding: 0;
+  font-family: 'Source Code Pro', monospace;
 }
 
 /* Containers */

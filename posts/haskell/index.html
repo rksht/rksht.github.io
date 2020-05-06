@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html><head>
 	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Haskell ramblings - Patient Boy</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Haskell ramblings - This</title><meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta property="og:title" content="Haskell ramblings" />
 <meta property="og:description" content="Some silly comments
   Terseness: Although it can be overdone, you can write terse yet readable code.
@@ -9,7 +9,7 @@
  Value producers with outgoing valves? Yes, &ldquo;valves&rdquo;. A type that implements a function called bind which should know how to pump values into a continuation? That&rsquo;s about it    Monad transformers:
  A value producer that you get by connecting two or more value producers?    Do notation:" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="rksht.github.io/posts/haskell/" />
+<meta property="og:url" content="https://rksht.github.io/posts/haskell/" />
 <meta property="article:published_time" content="2020-01-12T06:57:03+05:30" />
 <meta property="article:modified_time" content="2020-01-12T06:57:03+05:30" />
 <meta name="twitter:card" content="summary"/>
@@ -22,7 +22,7 @@
 
 	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" media="screen" href="rksht.github.iocss/main.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="https://rksht.github.io/css/main.css" />
 
 	<script
   type="text/javascript"
@@ -59,7 +59,7 @@
 </head><body>
         <div class="content"><header>
 	<div class="main">
-		<a href="rksht.github.io">Patient Boy</a>
+		<a href="https://rksht.github.io">This</a>
 	</div>
 	<nav>
 		
@@ -137,6 +137,24 @@ grammar (and by way a parser) that requires <code>number of lookaheads &gt; 1</c
 can get by without using try, your set of parsers will correspond to an LL(1)
 grammar.</p>
 <p><code>try</code> can make it easy to extend parsers though, I guess.</p>
+<p>I want to design my own monads</p>
+<p>Looking at monads as &ldquo;strategy&rdquo; to produce a result</p>
+<p>How to combine strategies? For now, it definitely depends on the strategy.</p>
+<p>chain :: Strategy -&gt; Strategy -&gt; Strategy
+chain s1 s2 = create a new strategy that runs the given strategies</p>
+<p>chain(chain(s1, s2), s3)</p>
+<p>This seems to type check on first glance, but we need to go into some more detail.</p>
+<p>Now, usually, a Strategy can be modelled as a function in the programming language. Lets say</p>
+<p>type Strategy in out = in -&gt; out</p>
+<p>So how would we implement chain?</p>
+<p>chain s1 s2 = \in -&gt; (s2 . s1) in</p>
+<p>We see some issues. This will constrain the in and out type variables to
+always be the same, otherwise it won&rsquo;t type check since s1&rsquo;s output is not
+going to be the same type as s2&rsquo;s input. That is quite the limitation.</p>
+<p>chain would actually have the following type sig</p>
+<p>chain :: Strategy a a -&gt; Strategy a a -&gt; Strategy a a</p>
+<p>It is already evident that chain needs to be overloaded for different strategies. But the second argument to chain needs to be some sort of &ldquo;intermediary&rdquo; that takes the output of the previous strategy and then produces a new strategy with possibly different output type that what it received.</p>
+<p>chain :: Strategy a b -&gt; (b -&gt; Strategy a c) -&gt; Strategy a c</p>
 
 		</section>
 

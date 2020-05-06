@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Temp Notes - This</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="Temp Notes" />
+<meta property="og:description" content="The &ldquo;GradGlobalWrtParams&rdquo; operator The global function is $G$ and the node is $f$. We also denote the successors of $f$ as $succ(f)$.
+Each such node as a list of parameters it depends on. The concatenated list of all parameters of all nodes form the parameters of $G$. Assume that gradient for $G$ is computable everywhere.
+So, we have the gradient of $G$ like
+$$ \nabla G = \langle \frac{\partial G}{\partial w_1}, \frac{\partial G}{\partial w_2}, \ldots \frac{\partial G}{\partial w_n} \rangle $$" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://rksht.github.io/posts/temp_notes/" />
+<meta property="article:published_time" content="2020-05-15T00:00:00+00:00" />
+<meta property="article:modified_time" content="2020-05-15T00:00:00+00:00" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Temp Notes"/>
+<meta name="twitter:description" content="The &ldquo;GradGlobalWrtParams&rdquo; operator The global function is $G$ and the node is $f$. We also denote the successors of $f$ as $succ(f)$.
+Each such node as a list of parameters it depends on. The concatenated list of all parameters of all nodes form the parameters of $G$. Assume that gradient for $G$ is computable everywhere.
+So, we have the gradient of $G$ like
+$$ \nabla G = \langle \frac{\partial G}{\partial w_1}, \frac{\partial G}{\partial w_2}, \ldots \frac{\partial G}{\partial w_n} \rangle $$"/>
+
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="screen" href="https://rksht.github.io/css/main.css" />
+
+	<script
+  type="text/javascript"
+  async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+</head><body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://rksht.github.io">This</a>
+	</div>
+	<nav>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">Temp Notes</h1>
+			<div class="meta">Posted on May 15, 2020</div>
+		</div>
+		
+
+		<section class="body">
+			<h2 id="the-gradglobalwrtparams-operator">The &ldquo;GradGlobalWrtParams&rdquo; operator</h2>
+<p>The global function is $G$ and the node is $f$. We also denote the successors of $f$ as $succ(f)$.</p>
+<p>Each such node as a list of parameters it depends on. The concatenated list of all parameters of all nodes form the parameters of $G$. Assume that gradient for $G$ is computable everywhere.</p>
+<p>So, we have the gradient of $G$ like</p>
+<p>$$
+\nabla G = 	\langle
+\frac{\partial G}{\partial w_1},
+\frac{\partial G}{\partial w_2}, \ldots
+\frac{\partial G}{\partial w_n}
+\rangle
+$$</p>
+<p>We can definitely assign the parameter list of each node $f$ as a sub-array of $\nabla G$. If $\vec{w_f}$ denotes the parameter list of $f$, such that it corresponds to the terms in range $[i \ldots j]$ of the global paramter list (should be that $0 \lt (j - i) \lt n$), the gradient descent update <em>at</em> $f$'s params is</p>
+<p>$$
+\vec{w_f} \leftarrow (\vec{w_f} - \nabla G[i \ldots j])
+$$</p>
+<p>So doing gradient descent is simply updating the parameter list of each node by subtracing the corresponding sublist of $\nabla G$.</p>
+<p>An idempotent mapping f: S -&gt; S ∪ {⊥} consists of ordered tuples such that</p>
+<ul>
+<li>
+<p>∀x ∈ S, ∃y ∈ S ∪ {⊥}, (x, y) ∈ f</p>
+</li>
+<li>
+<p>(x, y) ∈ f ⟹ ∄(p, _) ∈ f where p = x</p>
+</li>
+<li>
+<p>(x, y) ∈ f ⟹ (y, y) ∈ f</p>
+</li>
+</ul>
+<p>How many idempotent mappings can be created for a given set S?</p>
+<p>See wikipedia</p>
+<p>Something to note. There will always be some elements that can&rsquo;t be mapped to
+another element in S. For these we introduce the symbol ⊥ and map them to
+this, keep f a total function.</p>
+<hr>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-hs" data-lang="hs"><span style="color:#f92672">#!/</span>usr<span style="color:#f92672">/</span>bin<span style="color:#f92672">/</span>env stack
+<span style="color:#75715e">{- stack runghc --resolver lts-14.20
+</span><span style="color:#75715e">-}</span>
+
+<span style="color:#75715e">{-# LANGUAGE TupleSections #-}</span>
+
+<span style="color:#66d9ef">module</span> Main
+<span style="color:#66d9ef">where</span>
+
+<span style="color:#66d9ef">import</span>            Data.Foldable                  ( <span style="color:#a6e22e">foldl</span> )
+<span style="color:#66d9ef">import</span>            Data.Functor                   ( <span style="color:#a6e22e">fmap</span>  )
+
+<span style="color:#66d9ef">type</span> <span style="color:#66d9ef">Partition</span> a <span style="color:#f92672">=</span> ([a], [a])
+
+<span style="color:#75715e">-- Given a list of elements, returns all possible *ordered* 2-partitions of</span>
+<span style="color:#75715e">-- these elements.</span>
+<span style="color:#a6e22e">generatePartitions</span> <span style="color:#f92672">::</span> [a] <span style="color:#f92672">-&gt;</span> [<span style="color:#66d9ef">Partition</span> a]
+
+<span style="color:#a6e22e">generatePartitions</span> (x <span style="color:#66d9ef">:</span> xs) <span style="color:#f92672">=</span> foldl
+  (<span style="color:#a6e22e">\</span>accPartitions (left, right) <span style="color:#f92672">-&gt;</span>
+    ((x <span style="color:#66d9ef">:</span> left), right) <span style="color:#66d9ef">:</span> ((left, (x <span style="color:#66d9ef">:</span> right)) <span style="color:#66d9ef">:</span> accPartitions)
+  )
+  <span style="color:#66d9ef">[]</span>
+  (generatePartitions xs)
+
+<span style="color:#a6e22e">generatePartitions</span> <span style="color:#66d9ef">[]</span> <span style="color:#f92672">=</span> [(<span style="color:#66d9ef">[]</span>, <span style="color:#66d9ef">[]</span>)]
+
+<span style="color:#75715e">-- A single mapping is a set of ordered tuples. We must make sure that it is</span>
+<span style="color:#75715e">-- indeed a mapping (many-to-one) ourselves. We don&#39;t use a set explicitly but</span>
+<span style="color:#75715e">-- keep the tuples in list.</span>
+<span style="color:#66d9ef">type</span> <span style="color:#66d9ef">Mapping</span> a b <span style="color:#f92672">=</span> [(a, b)]
+
+<span style="color:#a6e22e">generateAllMappings</span> <span style="color:#f92672">::</span> [a] <span style="color:#f92672">-&gt;</span> [b] <span style="color:#f92672">-&gt;</span> [<span style="color:#66d9ef">Mapping</span> a b]
+
+<span style="color:#a6e22e">generateAllMappings</span> <span style="color:#66d9ef">[]</span> <span style="color:#66d9ef">_</span> <span style="color:#f92672">=</span> [<span style="color:#66d9ef">[]</span>]
+
+<span style="color:#a6e22e">generateAllMappings</span> (x<span style="color:#66d9ef">:</span>xs) ys <span style="color:#f92672">=</span> <span style="color:#66d9ef">do</span>
+  xy <span style="color:#f92672">&lt;-</span> ((x,) <span style="color:#f92672">&lt;$&gt;</span> ys)
+  (xy <span style="color:#66d9ef">:</span>) <span style="color:#f92672">&lt;$&gt;</span> (generateAllMappings xs ys)
+
+
+<span style="color:#a6e22e">generateIdempotentMappings</span> <span style="color:#f92672">::</span> ([a], [a]) <span style="color:#f92672">-&gt;</span> [<span style="color:#66d9ef">Mapping</span> a a]
+<span style="color:#a6e22e">generateIdempotentMappings</span> (fixedPoints, nonFixedPoints) <span style="color:#f92672">=</span>
+  <span style="color:#66d9ef">let</span> identityMappedElems <span style="color:#f92672">=</span> fmap (<span style="color:#a6e22e">\</span>x <span style="color:#f92672">-&gt;</span> (x, x)) fixedPoints <span style="color:#66d9ef">in</span>
+  <span style="color:#66d9ef">let</span> nonIdentityMappedElems <span style="color:#f92672">=</span> generateAllMappings nonFixedPoints fixedPoints <span style="color:#66d9ef">in</span>
+    fmap (identityMappedElems <span style="color:#f92672">++</span>) nonIdentityMappedElems
+
+
+<span style="color:#a6e22e">generateIdempotentMappingsFromElements</span> <span style="color:#f92672">::</span> [a] <span style="color:#f92672">-&gt;</span> [<span style="color:#66d9ef">Mapping</span> a a]
+<span style="color:#a6e22e">generateIdempotentMappingsFromElements</span> elements <span style="color:#f92672">=</span>
+  foldl (<span style="color:#f92672">++</span>) <span style="color:#66d9ef">[]</span> (generateIdempotentMappings <span style="color:#f92672">&lt;$&gt;</span> (generatePartitions elements))
+
+<span style="color:#a6e22e">main</span> <span style="color:#f92672">=</span> putStrLn <span style="color:#f92672">$</span> show <span style="color:#f92672">$</span> length <span style="color:#f92672">$</span> generateIdempotentMappingsFromElements [<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>]
+</code></pre></div><p>Better understanding of <code>join</code> is needed - <code>generatePartitions</code> is a good monad to ponder with.</p>
+<h2 id="lagrange-multipliers">Lagrange multipliers</h2>
+<p>The main theorem the technique is based on is as follows -</p>
+<p>If the level set $f(\vec{x}) = c$ is totally differentiable for all values of
+$\vec{x}$ that lie on the (i.e. subject to) the constraint level set
+$g(\vec{x}) = 0$, the critical points of $f$ are exactly those points where
+$\vec{\nabla} f = \lambda \vec{\nabla} g$.</p>
+<h2 id="affine-and-convex-set">Affine and Convex set</h2>
+<p>Affine sets, the weights are not constrained to be positive only, can be
+negative also. Convex sets they must be positive which means the weights must be
+in range [0 .. 1].</p>
+<p>Ellipsoid aka &ldquo;Stretched sphere&rdquo;</p>
+<p>A symmetric matrix has orthogonal eigenbasis.</p>
+<p>A positive definitive matrix is one with positive eigenvalues</p>
+<p>Any scaling linear transform that stretches or squeezes (but doesn&rsquo;t reverse) about some orthogonal
+basis will have these basis vectors as the eigenbasis.</p>
+<p>The inverse of this matrix will make the ellipse a circle.</p>
+<p>So the ellipse at origin major axis of length 1 will have all points x inside it
+satisfy</p>
+<p>inv(S) x</p>
+<h2 id="eigenvalue-facts">Eigenvalue facts</h2>
+<ul>
+<li>
+<p>A square matrix $A$ with dim $n$, has a multiset of eigenvalues $\text{Eigenvalues}$ such that $|\text{Eigenvalues}| =
+n$</p>
+</li>
+<li>
+<p>$1 \le |\text{Unique}(\text{Eigenvalues})| \le n$</p>
+</li>
+<li>
+<p>For any $v \in \text{Unique}(\text{Eigenvalues})$, $\text{dim }S(v) \le \text{mul}(v)$</p>
+</li>
+<li>
+<p>Sum of dim of each eigenspace $\le$ $n$</p>
+</li>
+<li>
+<p>Each unique eigenvalue has a one to one correspondance with a subspace of
+$R^n$, called the eigenspace of that eigenvalue.</p>
+</li>
+<li>
+<p>Eigenbasis exists $\Leftrightarrow$ dim of eigenspace of each eigenvalue $=$
+occurences of that eigenvalue in $\text{Eigenvalues}$</p>
+</li>
+<li>
+<p>Number of unique eigenvalues = $n$ $\Rightarrow$ Eigenbasis exists</p>
+<p>Also implies each eigenspace has dim of 1</p>
+</li>
+<li>
+<p>Taking bases from each eigenspace and concatenating into a single list of
+vectors gives you a basis of $R^n$ called the eigenbasis for $A$, since
+vectors from different eigenspaces are linearly indepedent.</p>
+</li>
+</ul>
+<pre><code>20:27:07     snyp | Matrix has eigenbasis &lt;=&gt; Matrix has n eigenvalues (including repeats according to algebraic multiplicity) ?         │ ^[_
+2.  ##c++        │20:28:09     snyp | Can it be that even with repeats as per  multiplicty the dimension of an eigenspace might be less than multiplicity? │ _explodes
+3.  ##C++-general│20:33:57 Z-module | no, it has an eigenbasis iff for each particular eigenvalue c, if that c has algebraic multiplicity k, then its      │ _kmh_
+4.  ##OpenGL     │                  | eigenspace has dimension k (that is, k linearly independent eigenvectors for that c exist).                          │ _tjr_
+5.  ##javascript │20:36:21 Z-module | For example matrix [1,1; 0,1]  has only the single eigenvalue 1, of alg. mult. 2, but its eigenspace is just { (r,0) │ _W_
+6.  #go-nuts     │                  | : r in the field }  which is only 1-dimensional. There is no eigenbasis here.                                        │ _Warl0ck
+7.  ##math       │20:37:09 Z-module | For each eigenvalue c, the geometric multiplicity can be any of 1, ..., k  where k is c's algebraic multiplicity.    │ a3Dman_
+                 │20:38:55     snyp | Z-module: oh i see, the dimension of each particular eigenspace should be equal to the multiplicity of that          │ abdulocracy
+                 │                  | eigenvalue.                                                                                                          │ abhi1802
+                 │20:39:13     snyp | algebraic multiplicity                                                                                               │ adadelta
+                 │20:39:19 Z-module | So if the n eigenvalues are all distinct, that forces each one to have alg. mult. = geom. mult. = 1, so here there   │ Adluc
+                 │                  | will have to be an eigenbasis.                                                                                       │ affinespaces
+                 │20:39:37 Z-module | right, on what you just said                                                                                         │ aib
+                 │20:39:56     snyp | n distinct eigenvalues =&gt; eigenbasis exists                                                                          │ AimHere
+                 │20:40:05 Z-module | yes                                                                                                                  │ albel727
+                 │20:40:09     snyp | ah                                                                                                                   │ Alchemical
+                 │20:40:11     snyp | thanks                                                                                                               │ aleph-
+                 │20:41:25 Z-module | a bit more strongly, any time you have a set S of particular eigenvectors where each one belongs to a different      │ AlexAltea
+                 │                  | eigenvalue, then S is linearly independent. You can prove that quite directly.                                       │ alexknvl
+                 │20:42:23 Z-module | so if |S| = n, with each vector belonging to a different eigenvalue (so the full n distinct eigenvalues exist here), │ ali1234
+                 │                  | then S is a basis. So it's an eigenbasis.                                                                            │ Alina-malina
+                 │20:43:41 Z-module | but if even a *single* eigenvalue c has geometric mult. &lt; its algebraic mult., then no eigenbasis can exist.         │ alip
+                 │20:44:21 Z-module | Once you really learn and understand the Jordan form of a matrix, all this info can be read off from it directly.    │ alkyl
+                 │20:44:37 Z-module | (an eigenbasis exists iff the Jordan form is diagonal)                                                               │ aloril
+                 │20:54:30     snyp | Z-module: that single eigenvalue having &lt; algebraic mult. can be proven from the fact that some of algebraic mult =  │ Alpha3031[m]
+                 │                  | n, right?                                                                                                            │ alphamule
+                 │20:54:34     snyp | s/some/sum                                                                                                           │ AlpineLlama
+                 │20:55:24 Z-module | yes                                                                                                                  │ Amaan
+                 │20:55:29 Z-module | (you mean sum of)                                                                                                    │ amalek
+                 │20:59:59 Z-module | So to summarize:  If the matrix is n x n, and if c_1,..., c_k  are all the distinct eigenvalues, and if &quot;AM&quot;, &quot;GM&quot;   │ amosbird
+                 │                  | stand for algebraic / geometric multiplicity, then: for each j from 1 to k,  1 &lt;= GM(c_j) &lt;= AM(c_j),  and  \sum_j   │ amuro
+                 │                  | AM(c_j) = n,  and  \sum_j GM(c_j) = the dimension of the largest possible independent set of eigenvectors -- this    │ andytoshi
+                 │                  | will always be &gt;= k  and  &lt;= n.  It = n iff the matrix is diagonalizable (an eigenbasis exists).                     │ AngryOwl      
+                 │21:01:08 Z-module | (wow, &quot;diagonalizable&quot; is a mouthful as a word -- 7 syllables)                                                       │ angular_mike
+                 │21:02:27     snyp | Z-module: yeah.. was writing a similar summary myself in my notes, haha 
+
+</code></pre>
+		</section>
+
+		<div class="post-tags">
+			
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr>⚡️
+	2020  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+
+
+</div>
+    </body>
+</html>

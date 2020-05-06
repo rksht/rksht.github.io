@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Code-like - This</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="Code-like" />
+<meta property="og:description" content="C/C&#43;&#43; coding convention Indentation Indent using 4 spaces. 2 spacess is too small, and using tabs makes it difficult to line stuff up using a mixture of spaces and tabs.
+Structs/classes Make them capitalized
+struct LikeThis { };  Local variables, and member variables Make them snake cased.
+LikeThis like_this;  Function names Make them snake cased too
+void my_cool_function(int first, int second) {}  Macros Make them SCREAMING! You should prefer enums, and inline functions, and use macros only when there is no other way or they reduce verbosity a lot." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://rksht.github.io/posts/code/" />
+<meta property="article:published_time" content="2020-06-29T04:12:58+05:30" />
+<meta property="article:modified_time" content="2020-06-29T04:12:58+05:30" />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Code-like"/>
+<meta name="twitter:description" content="C/C&#43;&#43; coding convention Indentation Indent using 4 spaces. 2 spacess is too small, and using tabs makes it difficult to line stuff up using a mixture of spaces and tabs.
+Structs/classes Make them capitalized
+struct LikeThis { };  Local variables, and member variables Make them snake cased.
+LikeThis like_this;  Function names Make them snake cased too
+void my_cool_function(int first, int second) {}  Macros Make them SCREAMING! You should prefer enums, and inline functions, and use macros only when there is no other way or they reduce verbosity a lot."/>
+
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="screen" href="https://rksht.github.io/css/main.css" />
+
+	<script
+  type="text/javascript"
+  async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+</head><body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://rksht.github.io">This</a>
+	</div>
+	<nav>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">Code-like</h1>
+			<div class="meta">Posted on Jun 29, 2020</div>
+		</div>
+		
+
+		<section class="body">
+			<h1 id="cc-coding-convention">C/C++ coding convention</h1>
+<h2 id="indentation">Indentation</h2>
+<p>Indent using 4 spaces. 2 spacess is too small, and using tabs makes it difficult to line stuff up using a mixture of spaces and tabs.</p>
+<h2 id="structsclasses">Structs/classes</h2>
+<p>Make them capitalized</p>
+<pre><code>struct LikeThis {
+};
+</code></pre>
+<h2 id="local-variables-and-member-variables">Local variables, and member variables</h2>
+<p>Make them snake cased.</p>
+<pre><code>LikeThis like_this;
+</code></pre>
+<h2 id="function-names">Function names</h2>
+<p>Make them snake cased too</p>
+<pre><code>void my_cool_function(int first, int second) {}
+</code></pre>
+<h2 id="macros">Macros</h2>
+<p>Make them SCREAMING! You should prefer enums, and inline functions, and use
+macros only when there is no other way or they reduce verbosity a lot.</p>
+<pre><code>#define ARRAY_SIZE(a) sizeof(a)/sizeof(a[0])
+</code></pre>
+<h2 id="often-used-macros">Often used macros</h2>
+<p>I have some macros that I use all the time. These are named in the usual
+snake_case but with an underscore appended. Example</p>
+<pre><code>#define const_ const auto
+#define var_ auto
+#define cvar_ const auto
+#define lam_ [&amp;]
+#define sca_ static constexpr auto
+#define fn_ auto
+</code></pre>
+<p>While modern C++ gives the ease of not declaring the variable type, <code>const auto &amp;</code> is still verbose, takes up space and takes up time to read compared to
+<code>cvar_ &amp;</code>.</p>
+<h2 id="c-namespaces">C++ namespaces</h2>
+<p>Use C++ namespaces, they look nice for collecting code dealing with a certain
+thing in one place.</p>
+<pre><code>namespace like_this {
+
+} // ns like_this   &lt;--- Comment at the end if the namespace is long
+</code></pre>
+<p>Don&rsquo;t indent code inside the namespace. Since namespaces span long portions of a file.</p>
+<pre><code>namespace like_this {
+
+// No indentation here
+struct Vector3 {
+    float x, y, z;
+};
+
+} // ns like_this
+</code></pre>
+<h2 id="enums">Enums</h2>
+<p>For sequence enums (starting with 0 and going to some N-1), declare them in a
+struct dedicated for this purpose. Name the enume type <code>E</code>. Put a <code>COUNT</code> enum
+value at the end.</p>
+<pre><code>struct MyEnum {
+    enum E : uint32_t {
+        INVALID = 0,
+        ENUM_VAL0,
+        ENUM_VAL1,
+
+        COUNT
+    };
+};
+</code></pre>
+<p>This allows using <code>IntMask</code> and some macros to generate masks for multiple
+such enums that are kept together in an unsigned integer.</p>
+<p>For bitflag enums, prefer making an <code>enum class</code>, instead of just an enum.
+Then you can use <code>fo::BitFlags</code> for some type safety. Then again, it&rsquo;s upto
+you.</p>
+<h2 id="member-methods">Member methods</h2>
+<p>Use member methods when the object is particularly focussed on a single task
+or tasks that involve simply transferring the arguments to another system
+after some simple tweaking. Treat member methods as a high level
+functionality. Don&rsquo;t use them for operating on objects that are reasonably
+complex. Reasonably complex types, which are basically &lsquo;systems&rsquo;, should be
+seen as data structures, and not as objects in the oop sense. Once you have
+some member methods, write other functionality in terms of them as non-member
+functions.</p>
+<h2 id="constructors-and-destructors">Constructors and destructors</h2>
+<p>Specify it clearly if an object requires calling something like <code>init()</code> or
+something on it before it is usable in the normal way. Try to make
+constructing an object immediately make it suitable for its actual use. If
+it&rsquo;s not possible in a simple way, provide an <code>init()</code> or <code>allocate()</code> etc.
+function, but make it clear in the comments.</p>
+<h2 id="use-arrays-and-array-based-sets-as-much-as-you-can">Use arrays and array based sets as much as you can</h2>
+<p>If number of items is &lt; 20 per frame, with constant operator== (think pointer
+or integer comparison) and you need to look up these items from a set, use an
+array based set (if order is not important).</p>
+<p>Arrays are good. Even if you can&rsquo;t estimate the amount of memory you will
+require, use arrays initially, look the allocator reports and then put an
+estimate and re-run.</p>
+<h2 id="reducing-verbosity-is-not-the-main-goal">Reducing verbosity is not the main goal</h2>
+<p>If it&rsquo;s verbose, but still simple, it&rsquo;s probably fine. Don&rsquo;t waste time on
+writing a &lsquo;intelligent&rsquo; interface.</p>
+<h2 id="commenting-out-code">Commenting out code</h2>
+<p>For commenting out code use <code>#if 0</code> macro as opposed to /**/ comments.</p>
+<pre><code>#if 0
+
+void not_using_this_function() {...}
+
+#endif
+</code></pre>
+<h2 id="commenting-for-documentation">Commenting for documentation</h2>
+<p>For documenting what a function or struct is used for use <code>//</code>.</p>
+<pre><code>// Adds two vector
+Vector3 add(Vector3 a, Vector3 b) { return {a.x + b.x, a.y + b.y, a.z + b.z}; }
+</code></pre>
+<h2 id="some-inheritance-is-fine">Some inheritance is fine</h2>
+<p>Even for even trivially copyable data types, you don&rsquo;t have to go all out C.
+If you want to have common members, just use inheritance.</p>
+<pre><code>struct HitInfo {
+    float t;
+    Vec3 normal;
+};
+
+struct HitInfoWithPosition : HitInfo {
+    Vec3 pos;
+};
+</code></pre>
+<hr>
+<h1 id="some-patterns">Some patterns</h1>
+<h2 id="the-namespace-class-pattern">The namespace class pattern</h2>
+<p>You don&rsquo;t have namespace templates in C++ but you can have pretty much the same functionality using class templates that do not have any non static member variables and functions.</p>
+<p>However, it is not a particularly clean pattern. You use this pattern to generate a set of generic functions that will <em>not</em> be specilized. I mean they can be specilized but you should not. It&rsquo;s difficult to enforce requirements for the specialized class. So, use namespace class pattern only when generating a set of</p>
+<h2 id="the-visitor-pattern">The visitor pattern</h2>
+<p>Have a tree with different types of nodes and want to traverse the tree? The visitor pattern is good for very local work at a subtree often a single node. When you have to work on a large enough subtree it&rsquo;s better to just use the optional visitor pattern or even a switch statement.</p>
+<p>The optional visitor pattern is just better simply because the logic is there in one place.</p>
+<p>Or just use a switch case with <code>VariantTable</code>. Dude, it&rsquo;s always about keeping things simple. Always.</p>
+<h2 id="static-interfaces">Static interfaces?</h2>
+<p>C++ static interface tradeoff</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">A</span> <span style="color:#f92672">:</span> Base<span style="color:#f92672">&lt;</span>A<span style="color:#f92672">&gt;</span> {};
+</code></pre></div><p>You have multiple types of object that derive from the same base class. You
+want to send them all to some function in an array.</p>
+<p><code>std::vector&lt;Base *&gt; items = {};</code></p>
+<p>If you have virtual methods, then the receiving function will be able to use
+them. This is what dynamic dispatch is all about. There is only one receiving
+function. It does not <em>know</em> what the actual type of the sent object is
+(unless you use dynamic_cast). The C++ runtime will however keep the
+corresponding virtual function table for the sent objects.</p>
+<p>If you have static interface, you cannot do this. You can, of course, put the
+pointers in a vector and send, but the elements are of type Base * and the
+interface methods are not virtual. The C++ runtime will not perform dynamic
+dispatch for these member functions. The solution is to make them virtual, but
+you&rsquo;re using dynamic dispatch here anyway.</p>
+<p>If ease of collecting different types implementing the same interface is all
+you want, then use virtual functions. If you need performance or something,
+then perhaps use static interfaces. There are alternatives to static
+interfaces.</p>
+<hr>
+<h2 id="cmake">Cmake</h2>
+<pre><code>-fvisibility-hidden 
+-fvisibility-inlines-hidden
+</code></pre><p><code>#define MY_LIBRARY_EXPORT __attribute__((visibility(&quot;default&quot;)))</code></p>
+<p>&ndash;</p>
+<p>With cmake set global property for the project, or target property.</p>
+<pre><code>set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(CMAKE_CXX_VISIBILITY_INLINES_HIDDEN YES)
+
+add_library(my_library ...)
+
+include(GeneratedExportHeader)
+generate_export_header(my_library)
+</code></pre><p>A header <code>my_library_exports.h</code> is created by cmake containing the definition of <code>MY_LIBRARY_EXPORT</code> and <code>MY_LIBRARY_EXPORTS</code>, the second only defined while building. The name doesn&rsquo;t need to be <code>my_library</code>.</p>
+<p>class export_ MyClass
+{
+public:</p>
+<pre><code>MyClass();
+</code></pre>
+<p>};</p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr>⚡️
+	2020  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+
+
+</div>
+    </body>
+</html>
