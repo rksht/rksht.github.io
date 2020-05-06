@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Patient Boy</title>
-    <link>rksht.github.io/</link>
-    <description>Recent content on Patient Boy</description>
+    <title>This</title>
+    <link>https://rksht.github.io/</link>
+    <description>Recent content on This</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 05 May 2020 00:00:00 +0000</lastBuildDate>
     
-	<atom:link href="rksht.github.io/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://rksht.github.io/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>What is a total derivative</title>
-      <link>rksht.github.io/posts/total_deriv/</link>
+      <link>https://rksht.github.io/posts/total_deriv/</link>
       <pubDate>Tue, 05 May 2020 00:00:00 +0000</pubDate>
       
-      <guid>rksht.github.io/posts/total_deriv/</guid>
+      <guid>https://rksht.github.io/posts/total_deriv/</guid>
       <description>Linear approximation We will only talk about scalar-valued functions.
 First we learn about linear approximation - what it exactly is.
 Look at a single-variable function $f : R \rightarrow R$. The linear approximation of this function at the point $x = a$, is defined as the function $L : R \rightarrow R$ such that
@@ -26,10 +26,10 @@ Linear part is $A(x) = f&amp;rsquo;(a)x$. So we could write it as $L(x) = f(a) +
     
     <item>
       <title>Derivation an RNG following the cosine distribution</title>
-      <link>rksht.github.io/posts/derivation_of_cosine_distrib/</link>
+      <link>https://rksht.github.io/posts/derivation_of_cosine_distrib/</link>
       <pubDate>Mon, 20 Jan 2020 06:57:03 +0530</pubDate>
       
-      <guid>rksht.github.io/posts/derivation_of_cosine_distrib/</guid>
+      <guid>https://rksht.github.io/posts/derivation_of_cosine_distrib/</guid>
       <description>Using the inversion method.
 The CDF is
 $$ G(\theta, \phi) = \frac{\sin^2\theta}{2\pi} (\phi+\pi) $$
@@ -40,10 +40,10 @@ Now, if we generate a canonical random variable $r_j$, let $r_j = G(\theta_j,\pi
     
     <item>
       <title>Radiance formulas</title>
-      <link>rksht.github.io/posts/radiance_formulas/</link>
+      <link>https://rksht.github.io/posts/radiance_formulas/</link>
       <pubDate>Mon, 20 Jan 2020 06:57:03 +0530</pubDate>
       
-      <guid>rksht.github.io/posts/radiance_formulas/</guid>
+      <guid>https://rksht.github.io/posts/radiance_formulas/</guid>
       <description>Preliminary Differential solid angle = $dω = \sin{\theta} \space dθ \space dϕ$
 A solid angle is an integral quantity. Multiple collections of directions can have the same solid angle measure.
  &amp;ldquo;Power&amp;rdquo; without any extra &amp;ldquo;per something&amp;rdquo; is not a super useful quantity.
@@ -53,20 +53,20 @@ So we are indeed associating power with area.</description>
     
     <item>
       <title>Go ramblings</title>
-      <link>rksht.github.io/posts/go/</link>
+      <link>https://rksht.github.io/posts/go/</link>
       <pubDate>Sun, 12 Jan 2020 06:57:03 +0530</pubDate>
       
-      <guid>rksht.github.io/posts/go/</guid>
+      <guid>https://rksht.github.io/posts/go/</guid>
       <description>This is not inheritance.
 type GitGudder interface { GitGud() } type BaseStruct struct { // whatever } func (b *BaseStruct) GitGud() { // meh } type MyStruct struct { BaseStruct number int }  This is not inheritance. Although MyStruct implements the GitGudder interface, the BaseStruct in MyStruct knows nothing about the other fields in MyStruct. So it truly is composition. The GitGud() method on BaseStruct takes a pointer to BaseStruct, not MyStruct.</description>
     </item>
     
     <item>
       <title>Haskell ramblings</title>
-      <link>rksht.github.io/posts/haskell/</link>
+      <link>https://rksht.github.io/posts/haskell/</link>
       <pubDate>Sun, 12 Jan 2020 06:57:03 +0530</pubDate>
       
-      <guid>rksht.github.io/posts/haskell/</guid>
+      <guid>https://rksht.github.io/posts/haskell/</guid>
       <description>Some silly comments
   Terseness: Although it can be overdone, you can write terse yet readable code.
   Monads:
@@ -76,10 +76,10 @@ type GitGudder interface { GitGud() } type BaseStruct struct { // whatever } fun
     
     <item>
       <title>Limit of a sequence (i.e. discrete limit)</title>
-      <link>rksht.github.io/posts/limit_of_sequence/</link>
+      <link>https://rksht.github.io/posts/limit_of_sequence/</link>
       <pubDate>Sun, 12 Jan 2020 06:57:03 +0530</pubDate>
       
-      <guid>rksht.github.io/posts/limit_of_sequence/</guid>
+      <guid>https://rksht.github.io/posts/limit_of_sequence/</guid>
       <description>In all this discussion, variables $n$ and $k$ will be positive integers.
 A sequence $S \equiv S(n)$ (denoted as $S_n$) where $n \in \mathbb{Z}^+$ is said to have a finite limit $a$ iff
 $$ \forall d \in \mathbb{R}^+, (\exists k \in \mathbb{Z}, (\forall n &amp;gt; k, (|a - S_n| &amp;lt; d))) $$
@@ -88,10 +88,10 @@ From an adversary game point of view, no matter how small you choose d, you will
     
     <item>
       <title></title>
-      <link>rksht.github.io/posts/dft/</link>
+      <link>https://rksht.github.io/posts/dft/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>rksht.github.io/posts/dft/</guid>
+      <guid>https://rksht.github.io/posts/dft/</guid>
       <description></description>
     </item>
     
