@@ -121,7 +121,7 @@ to comply with GitGudder. Some chore.</p>
     return base.GitGud() + gud.GetSuperGud() // Maybe your function is much more complex than just the `+` operator
 }
 </code></pre>
-<h2 id="networking-with-code-that-looks-synchronous-but-is-actually">Networking with code that looks synchronous but is actually</h2>
+<h2 id="networking-with-code-that-looks-synchronous-but-is-actually-asynchronous">Networking with code that looks synchronous but is actually asynchronous</h2>
 <p>Epoll is the event polling loop, and you are the event consumer. So you have
 to write a loop that responds to event completion. If performance and number
 of pthreads were not a concern, simply write</p>
