@@ -6,7 +6,19 @@
     <description>Recent content in Posts on This</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jun 2020 04:12:58 +0530</lastBuildDate><atom:link href="https://rksht.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 03 May 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://rksht.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Workbook</title>
+      <link>https://rksht.github.io/posts/workbook/</link>
+      <pubDate>Mon, 03 May 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://rksht.github.io/posts/workbook/</guid>
+      <description>Conv Net notes F = the filter matrix I = the image matrix In 1D, if filter size is n (which should be odd) and we want to know the convolved output at location i. Then conv(i) = sum_{f = 0 to n-1} Filter[f] * Image[f - (n-1)/2 + i]
+This is actually cross correlate op not quite convolution op.
+How to set the neural net layer
+An observation - You want to find the grad of the global relative to the parameters of the sub-node functions.</description>
+    </item>
+    
     <item>
       <title>Code-like</title>
       <link>https://rksht.github.io/posts/code/</link>
@@ -18,6 +30,18 @@ Structs/classes Make them capitalized
 struct LikeThis { };  Local variables, and member variables Make them snake cased.
 LikeThis like_this;  Function names Make them snake cased too
 void my_cool_function(int first, int second) {}  Macros Make them SCREAMING! You should prefer enums, and inline functions, and use macros only when there is no other way or they reduce verbosity a lot.</description>
+    </item>
+    
+    <item>
+      <title>Temp Notes</title>
+      <link>https://rksht.github.io/posts/temp_notes/</link>
+      <pubDate>Fri, 15 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://rksht.github.io/posts/temp_notes/</guid>
+      <description>The &amp;ldquo;GradGlobalWrtParams&amp;rdquo; operator The global function is $G$ and the node is $f$. We also denote the successors of $f$ as $succ(f)$.
+Each such node as a list of parameters it depends on. The concatenated list of all parameters of all nodes form the parameters of $G$. Assume that gradient for $G$ is computable everywhere.
+So, we have the gradient of $G$ like
+$$ \nabla G = \langle \frac{\partial G}{\partial w_1}, \frac{\partial G}{\partial w_2}, \ldots \frac{\partial G}{\partial w_n} \rangle $$</description>
     </item>
     
     <item>
@@ -80,6 +104,29 @@ type GitGudder interface { GitGud() } type BaseStruct struct { // whatever } fun
 A sequence $S \equiv S(n)$ (denoted as $S_n$) where $n \in \mathbb{Z}^+$ is said to have a finite limit $a$ iff
 $$ \forall d \in \mathbb{R}_{\gt 0}, (\exists k \in \mathbb{Z}, (\forall n \gt k, (|a - S_n| \lt d))) $$
 From an adversary game point of view, no matter how small you choose $d$ (without making it 0), you will find that the distance between $a$ and $S_n$ stays less than $d$ after a certain point.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://rksht.github.io/posts/ntheory/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://rksht.github.io/posts/ntheory/</guid>
+      <description>Number theoretic ideas Since we deal with large integers, the time complexity of the algorithms is expressed with respect to the number of bits of the input integers. Elementary operations like add, subtract, multiply and divide can be time-consuming enough when dealing with large integers, so it becomes relevant to measure how many bit operations are required by a number-theoretic algorithm. In this model, the schoolbook multiplication algorithm to mul two words requires a time O(b^2) where b is the word size.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://rksht.github.io/posts/summary/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://rksht.github.io/posts/summary/</guid>
+      <description>The tamper-proof nation
+  Blockchain based transactions at every level
+  Property (land, money, stock) exchanges
+  Voting
+  All transactions auditable using a query lang
+  </description>
     </item>
     
   </channel>

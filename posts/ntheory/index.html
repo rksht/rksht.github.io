@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title> - This</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="" />
+<meta property="og:description" content="Number theoretic ideas Since we deal with large integers, the time complexity of the algorithms is expressed with respect to the number of bits of the input integers. Elementary operations like add, subtract, multiply and divide can be time-consuming enough when dealing with large integers, so it becomes relevant to measure how many bit operations are required by a number-theoretic algorithm. In this model, the schoolbook multiplication algorithm to mul two words requires a time O(b^2) where b is the word size." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://rksht.github.io/posts/ntheory/" /><meta property="article:section" content="posts" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="Number theoretic ideas Since we deal with large integers, the time complexity of the algorithms is expressed with respect to the number of bits of the input integers. Elementary operations like add, subtract, multiply and divide can be time-consuming enough when dealing with large integers, so it becomes relevant to measure how many bit operations are required by a number-theoretic algorithm. In this model, the schoolbook multiplication algorithm to mul two words requires a time O(b^2) where b is the word size."/>
+
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="screen" href="https://rksht.github.io/css/main.css" />
+
+	<script
+  type="text/javascript"
+  async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+</head><body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://rksht.github.io">This</a>
+	</div>
+	<nav>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title"></h1>
+			<div class="meta">Posted on Jan 1, 0001</div>
+		</div>
+		
+
+		<section class="body">
+			<h2 id="number-theoretic-ideas">Number theoretic ideas</h2>
+<p>Since we deal with large integers, the time complexity of the algorithms is
+expressed with respect to the number of bits of the input integers. Elementary
+operations like add, subtract, multiply and divide can be time-consuming
+enough when dealing with large integers, so it becomes relevant to measure how
+many bit operations are required by a number-theoretic algorithm. In this
+model, the schoolbook multiplication algorithm to mul two words requires a
+time O(b^2) where b is the word size.</p>
+<h2 id="basics">Basics</h2>
+<p>See CLRS chapter 31.</p>
+<h2 id="common-factor-is-also-a-factor-of-any-linear-combination-cffl">Common Factor is also a Factor of any linear-combination (CFFL)</h2>
+<p>One nifty thing to remember is that if $d$ is a common divisor of $a$ and $b$ then $d$
+divides any linear combination of $a$ and $b$.</p>
+<h2 id="gcd">GCD</h2>
+<p>For any integer a and b,</p>
+<pre><code>gcd(a, ka) = |a|
+gcd(a, 0) = |a|
+gcd(a, b) = gcd(|a|, |b|)
+gcd(a, b) = gcd(-a, b)
+gcd(a, b) = gcd(b, a)
+</code></pre>
+<p>See alternative definition of gcd (in terms of a linear combination). Theorem
+31.2. Writing it here.</p>
+<p>If a and b are any integers, not both zero, then</p>
+<pre><code>gcd(a, b) = min_positive {ax + by | x, y in Z}
+</code></pre>
+<p>First we will call the set of all linear combinations of a and b X.</p>
+<p>Suppose that</p>
+<pre><code>s = min_positive X
+  = au + bv  for some u, v in Z
+</code></pre>
+<p>Let q = a // s    (btw, a // s means floor(a / s))</p>
+<p>Then,</p>
+<pre><code>a mod s = a - qs
+        = a - q(au + bv)
+        = a(1 - qu) + b.(-qy)
+</code></pre>
+<p>So (a mod s) in X too. But since 0 &lt;= a mod s &lt; s, and s is the smallest
+positive element in X, we must have that a mod s = 0. Therefore s | a.
+Parallel argument can be made to show s | b. So s is a common divisor of a and
+b. So at this point we can say that gcd(a, b) &gt;= s. Since s is a linear
+combination of a and b, gcd(a, b) | s. But gcd(a, b)|s and s &gt; 0 implies that
+gcd(a, b) &lt;= s. So gcd(a, b) &gt;= s and gcd(a, b) &lt;= s together imply gcd(a, b)
+== s.</p>
+<h2 id="extended-euclid---much-discuss-such-amaze--eea">Extended Euclid - much discuss, such amaze  (EEA)</h2>
+<pre><code>def ExtendedEuclid(a, b):
+    if b == 0:
+        return (a, 1, 0)
+    (d', x', y') = ExtendedEuclid(b, a mod b)
+    (d, x, y) = (d', y', x' - (a//b) * y')
+    return (d, x, y)
+</code></pre>
+<p>Update after a couple of years.</p>
+<p>The recursive algorithm is quite easily understood. One key thing to see is that
+$d$ and $d'$ are equal to $gcd(a, b) = gcd(b, a \mod b)$. So assume that $d' = b
+x' + (a \mod b) y'$. Then we can show that we maintain this property by setting
+$(a \mod b) = a - \lfloor a/b \rfloor b$ and setting $d = d'$ and re-ordering
+the expression we obtain $x$ and $y$.</p>
+<p>Anyway, the time complexity of euclid as well as extended euclid is O(lg b).
+Pretty good when you have really large numbers like for a 1024 bit number, you
+might have b = 2**1024 - 1, so the algorithm will take c*1024 time units. The
+constant c should be less than 10_000 (?)</p>
+<h2 id="relative-primality">Relative primality</h2>
+<p>If gcd(a, n) = 1, and gcd(b, n) = 1, then gcd(ab, n) = 1. Therefore, it can be
+generalized to the theorem that if we have a_1, a_2, &hellip;, a_n relatively prime
+to each other, the for all i = 1 to n, a_i is relatively prime to the product
+of all a_j&rsquo;s where i != j.</p>
+<h2 id="z_n-is-a-finite-abelian-group-zfag">Z_n is a finite abelian group (ZFAG)</h2>
+<p>Book uses a bit of notation for modulo classes.</p>
+<pre><code>Z_n = {[a]_n | 0 &lt;= a &lt; n}
+
+where [a]_n = {a + kn | k in Z}
+</code></pre>
+<p>So Z_n is the set of equivalance classes modulo n.
+Often write</p>
+<pre><code>Z_n = {0, 1, ..., n - 1}
+</code></pre>
+<p>but that&rsquo;s just a shortcut, where each a in Z_n stands for the <em>set</em> [a]_n. a
+being the least number in the equivalence class it represents.</p>
+<p>Z_n is a finite abelian group. We define the + operator as follows.</p>
+<pre><code>forall [a]_n, [b]_n in Z_n,
+
+    [a]_n + [b]_n = [a + b]_n
+</code></pre>
+<p>That is, in english, the &lsquo;addition&rsquo; of two equivalence classes (modulo n)
+represented by the least numbers a and b is equal to the equivalance class
+represented by the number a + b (also, by the least number (a + b) mod n)</p>
+<p>And indeed, this definition makes the presence of equivalence classes explicit
+and makes concrete the fact that the objects we are operating on are <em>not</em>
+numbers, but equivalence classes.</p>
+<h2 id="z_n-is-also-a-finite-abelain-group">Z_n* is also a finite abelain group</h2>
+<p>This time Z_n* = {[a]_n | gcd(a, n) = 1}, i.e Z_n* consists of those
+equivalence classes that are (the elements of which, precisely) relatively
+prime to n. If gcd(k, n) = 1 for any k ∈ [a]_n then all k ∈ [a]_n also satisfy
+gcd(k, n) and are in Z_n* so we can just use the representative element.</p>
+<p>This ensures that for any element [a]_n in Z_n* has a multiplicative inverse
+[x]_n module n, in Z_n* i.e</p>
+<pre><code>a x == 1 (mod n)   for all a in [a]_n and x in [x]_n
+</code></pre>
+<p>The ExtendedEuclid algorithm enables us to find the corresponding inverse x of
+a given a at the point where d = 1.</p>
+<pre><code>a x + n y = 1
+</code></pre>
+<h2 id="size-of-z_n">Size of Z_n*</h2>
+<p>The size of Z_n* is the number of positive integers relatively prime to n. A
+formula for that exists, and is called Euler&rsquo;s phi function.</p>
+<pre><code>|Z_n*| = Phi(n) = n * ( mul_{p | p is prime and p\n}, (1 - 1/p) )
+</code></pre>
+<h2 id="proof-of-eulers-phin">Proof of Euler&rsquo;s phi(n)</h2>
+<p>We prove that
+$$
+\Phi(n) = n \prod_{p \mid p \text{ is prime and } p | n} (1 - \frac{1}{p})
+$$</p>
+<p>If $p$ is a prime and $p$ divides $n$ then the number of integers in the range
+$[1, n]$ divisible by $p$ is $p/n$. If there are $k$ primes that divide $n$, we can number them as $p_i$. Let&rsquo;s say $n = n_0$.</p>
+<p>If so, then
+$$
+n_1 = n_0 - \frac{n_0}{p_0}
+$$
+is the number of integers that are <em>not</em> divisible by $p_0$ in range $[1,n]$. Similarly, the number of integers not divisible by $p_{i}$ is
+$$
+n_{i} = n_{i-1} - \frac{n_{i-1}}{p_{i-1}} = n_{i-1} (1 - \frac{1}{p_{i-1}})
+$$</p>
+<p>And since we have base case $n_0 = n$, we keep substituting the value of $n_i$ to obtain the product expression.</p>
+<h2 id="some-properties-of-congruences">Some Properties of Congruences</h2>
+<p>The numbers, or rather, the equivalence-classes(aka, numbers modulo n) we work
+with when dealing with modulo n system can be seen as clock</p>
+<pre><code>    ..., [n-1]_n,   [0]_n, [1]_n, ..., [n-1]_n,  [0]_n, [1]_n, ...
+            ^   ^
+    ~~~~~~~~~-------+   +-------------------------+  +--------~~~~~~~~
+</code></pre>
+<p><code>mod n</code> can be seen as the remainder function. For our purposes, we will
+assume the convention that (x mod n) is always positive. x can be negative. If
+we walk x steps to the right, starting at any [0]_n, then the distance from
+the final point to the very first [0]_n towards the left or itself, is the
+output of (x mod n). By &lsquo;itself&rsquo;, I mean the final point can itself be a [0]_n,
+and in that case the distance is 0.</p>
+<p>In this view, <code>-2 (mod n)</code>, is said to denote the the class <code>[n - 2]_n</code>.</p>
+<p><code>-(n + 2) (mod n)</code> is, again, the class <code>[n - 2]_n</code>. Pretty intuitive.</p>
+<p>So, x (mod n), denotes the equivalence class modulo n, which are themselves
+denoted by the numbers {0, 1, &hellip;, n - 1}.</p>
+<p>x mod n, however, denotes the smallest element of the equivalence class <code>x (mod n)</code>. The distinction seems subtle in this description, but keep in mind,
+x (mod n) denotes a whole set of numbers while x mod n, denotes a single
+number. In that light, the solution to <code>x === k  (mod n)</code>, is the whole
+equivalence class k (mod n).</p>
+<p>The following properties hold for congruences</p>
+<pre><code>Mod property
+</code></pre>
+<ul>
+<li>
+<pre><code>  a.b                 (mod n)
+</code></pre>
+<p>=== (a mod n).(b mod n) (mod n)</p>
+<p>Substitution properties</p>
+</li>
+<li>
+<pre><code>  x === a.b (mod n)
+  b === c   (mod n)
+</code></pre>
+<p>=&gt;  x === a.c (mod n)</p>
+</li>
+<li>
+<pre><code>  x === a + b (mod n)
+  b === c     (mod n)
+</code></pre>
+<p>=&gt;  x === a + c (mod n)</p>
+</li>
+</ul>
+<h2 id="subgroups-generator-element-etc-sg">Subgroups, generator element, etc. (SG)</h2>
+<p>Read from book.</p>
+<p>One interesting theorem about subgroups is that if (S, +) is a finite group
+and (S', +) is a subgroup of (S, +), then |S'| divides |S|. See below for the
+size of |S'| for subgroups generated by a particular element.</p>
+<h2 id="solving-modular-linear-equations-smle">Solving modular linear equations (SMLE)</h2>
+<p>$a x \equiv b \pmod n$</p>
+<p>where $a &gt; 0$, $n &gt; 0$</p>
+<p>a, b, n are given. x is gotta be solved for. Let $\langle a \rangle$ denote the subgroup of $Z_n$
+generated by $a$.</p>
+<p>See how $\langle a \rangle = {a^x | x &gt; 0} = {a x \mod n | x &gt; 0}$. So that equation will have
+a solution if and only if</p>
+<p>$[b]_n \in \langle a \rangle$</p>
+<p>&ndash; Theorem</p>
+<p>Quite a few theorems required in establishing the following algorithm. See book for those. Kinda interesting, kinda detail.</p>
+<p>So combining these two facts, the algorithm for enumerating the solutions is
+pretty straightforward using the ExtendedEuclid algorithm.</p>
+<pre><code>def SolveLinearCongruence(a, b, n):
+    # Solves for a x === b (mod n)
+    d, x', _ = ExtendedEuclid(a, n)
+    if b mod d != 0:
+        print(&quot;No solutions!&quot;)
+        return
+    x_0 = x' * (b/d) mod n
+    for i = 0 to d - 1:
+        print((x_0 + i * (n/d)) mod n)
+</code></pre>
+<p>&ndash; Corollary</p>
+<p>The interesting case is while solving a x === 1 (mod n). Solving this equation
+gives <em>the</em> (yes, unique, d = 1 here) multiplicative inverse of a modulo n
+(obviously, that&rsquo;s pretty much the definition).</p>
+<p>This is what RSA is based around. Two keys, one key being the inverse of the
+other.</p>
+<p>And how many solutions does the equation have, if it&rsquo;s solvable indeed? Only</p>
+<ol>
+<li>We haven&rsquo;t proved that the multiplicative inverse of any a is unique yet.
+However, see that if d = gcd(a, n), then \langle a \rangle = n/d = n.</li>
+</ol>
+<p>&ndash; An example</p>
+<p>What if we write the primary solution to be</p>
+<pre><code>x_0 = x' * (b/d) mod (n/d)
+</code></pre>
+<p>in the SolveLinearCongruence algorithm? Will that give the same set of
+solutions for all instances of a, b and n?</p>
+<p>&ndash;</p>
+<h2 id="the-chinese-remainder-theorem-tcrt">The Chinese remainder theorem (TCRT)</h2>
+<p>I will explain this to myself. CLRS is a little terse in the proof. Suppose
+that you have r relatively prime integers m_1, &hellip;, m_r. Given r corresponding
+integers, a_1, &hellip;, a_r, we wish to find the solution to the set of
+congruences</p>
+<pre><code>    x === a_1  (mod m_1)
+    .
+    .
+    x === a_r  (mod m_r)
+</code></pre>
+<p>The theorem says that given this premise, there always exists a solution.</p>
+<h2 id="tcrt-proof">TCRT-Proof</h2>
+<p>The proof is by construction. We set up r more integers n_1, &hellip;, n_r such that</p>
+<pre><code>    n_i = (m_1 * m_2 * ... * m_r) / m_i
+</code></pre>
+<p>Now, for each i, we have</p>
+<pre><code>    gcd(n_i, m_i) = 1
+</code></pre>
+<p>So, via a well-known theorem, there exists for each i, a unique inv(n_i) such
+that</p>
+<pre><code>    n_i * inv(n_i) === 1  (mod m_i)                        (1)
+</code></pre>
+<p>By multiplying both sides of the congruence by a_i(which we can do), we keep
+around the following set of congruences for each i</p>
+<pre><code>    n_i * inv(n_i) * a_i === a_i  (mod m_i)                (2)
+</code></pre>
+<p>Furthermore, for each i, for each j != i,</p>
+<pre><code>    n_i * inv(n_i) === 0  (mod m_j)     (3) (since m_j is a factor of n_i)
+</code></pre>
+<p>We can set up our solution to be</p>
+<pre><code>    x_0 = sum_{j = 1 to r}, n_j * inv(n_j) * a_j           (3)
+</code></pre>
+<p>For each m_i, we can first set up the congruences modulo m_i of each of the
+terms of the sum, then add them up to get x_0 modulo m_i. Fix an i, and
+therefore an m_i. We see that only the i-th term of the sum equals a_i modulo
+m_i, while all other terms equal 0 modulo m_i.</p>
+<p>The j-th terms, where j != i, have</p>
+<pre><code>    n_j * inv(n_j) * a_j    === 0       (mod m_i)          (4)
+</code></pre>
+<p>while the i-th term has</p>
+<pre><code>    n_i * inv(n_i) * a_i    === a_i     (mod m_i)          (5)
+</code></pre>
+<p>Adding the congruences we get</p>
+<pre><code>    x_0                     === a_i     (mod m_i)          (6)
+</code></pre>
+<p>An example - find all the solutions to</p>
+<pre><code>    x === 4  (mod 5)
+    x === 5  (mod 11)
+
+n_1 = (5*11)/5 = 11,  inv(n_1)_5 = 1   (Using SolveLinearCongruence or ExtendedEuclid)
+n_2 = (5*11)/11 = 5,  inv(n_2)_11 = 9  (Using SolveLinearCongruence or ExtendedEuclid)
+
+x_0 === n_1 * inv(n_1) * 4 + n_2 * inv(n_2) * 5     (mod 55)
+    === 269 (mod 55)
+    === 49 (mod 55)
+
+x = 49 + 55 * k
+</code></pre>
+<h2 id="tcrt---implications">TCRT - implications</h2>
+<p>Before going into the implication, a brief note on residue systems. Given an
+integer n, a complete residue system modulo n is a set of n integers r_1, &hellip;,
+r_n, where for i != j</p>
+<pre><code>    r_i ==/= r_j   (mod n)
+</code></pre>
+<p>This is to say that the set of n numbers must have exactly 1 element from each
+[a]_n for a = 0, 1, &hellip;, n-1.</p>
+<p>Let&rsquo;s use a notation for working with TCRT. Fix a set r of pairwise relatively
+prime integers m_1, &hellip;, m_r.  The number of pairwise relatively prime integer
+is going to be denoted with the variable r. The right-hand-sides of the
+congruences will be denoted with the tuple (a_1, a_2, &hellip;, a_r). Let the
+residuence classes each a_i belong to be denoted as a tuple too, like (&amp;(a_1),
+&hellip;, &amp;(a_r)), where &amp;(a_i) gives the residue class number (which is a number
+in [0 .. m_i - 1] for each a_i). Then the theorem says that for each unique
+residue-class tuple, there exists a unique solution to the system of
+congruences, and vice-versa. That is, there is a one to one correspondence
+between</p>
+<pre><code>a  &lt;-&gt;  (&amp;(a_1), ..., &amp;(a_r))
+</code></pre>
+<p>CLRS directly proves this by making the a_i of each congruence be defined as
+(a mod m_i), which makes a_i a residue number modulo m_i. The CLRS proof is
+equivalent to the apparently more general proof however.</p>
+<p>A corollary is this. Given pairwise relatively prime numbers n_1, &hellip;, n_k,
+such that n = n_1 * n_2 * &hellip; * n_k, and an integer a, and a set of
+congruences with the unknown x,</p>
+<pre><code>x === a  (mod n_i)      for i = 1 to k
+</code></pre>
+<p>has a solution if and only if</p>
+<pre><code>x === a (mod n)
+</code></pre>
+<p>This is directly from the TCRT solution construction. Each a_i equals a.</p>
+<h2 id="powers-of-an-element-poae">Powers of an element (POAE)</h2>
+<p>We are interested in sequences of powers of a modulo n, where a in Z_n*. Since
+gcd(a, n) = 1, gcd(a**i, n) = 1 for any i. So yes, all powers of a modulo n
+appear in Z_n*. Remember Z_n* = ( {a | gcd(a, n) = 1}, .)</p>
+<p>Let \langle a \rangle denote the subgroup of Z_n* generated by a by repeated multipication.</p>
+<p>A few theorems.</p>
+<ul>
+<li>
+<p>For any finite group (S, op), and any a in S, define the order of a, ord(a),
+to be the least integer t such that a**(t) = e, where e is the identity
+element of S. Then ord(a) = |\langle a \rangle|.</p>
+</li>
+<li>
+<p>If (S, op) is a finite group with identity e, then for all a in S,</p>
+<p>a**(|S|) = e</p>
+</li>
+</ul>
+<p>The proof is by Langrage&rsquo;s theorem, which says ord(a) divides |S|. That is,</p>
+<pre><code>|S| === 0  (mod ord(a))
+
+a**|S| = a**0 = e
+</code></pre>
+<ul>
+<li>
+<p>(Euler&rsquo;s theorem) For any integer n &gt; 1,</p>
+<p>a**Phi(n) === 1  (mod n), for all a in Z_n*</p>
+<p>This is a direct translation of the previous theorem. Phi(n) = |Z_n*|, and
+e = 1.</p>
+</li>
+<li>
+<p>(Fermat&rsquo;s theorem) If p is a prime,</p>
+<p>a**(p - 1) === 1  (mod  p)</p>
+</li>
+<li>
+<p>(Primitive root) An element g of Z_n* is called the primitive root modulo n
+if it generates Z_n*.</p>
+</li>
+</ul>
+<p>If Z_n* has a primitive root then Z_n* is called a cyclic group. Now here&rsquo;s
+something that let&rsquo;s us tell if Z_n* is cyclic or not. It&rsquo;s cyclic if n is 2,
+or 4, or p**e, or 2.p**e, for all primes p &gt; 2 and all positive integers e.
+This is kind of surprising, but CLRS refers to the number theory book by Niven
+for proof.</p>
+<h2 id="poae---discrete-logarithm-theorem">POAE - Discrete logarithm theorem</h2>
+<p>If g is a primitive root of Z_n* then the equation</p>
+<pre><code>g**x === g**y  (mod n)    &lt;=&gt;     x === y  (mod Phi(n))
+</code></pre>
+<p>See proof from book.</p>
+<h2 id="poae---modulo-power-of-prime">POAE - Modulo power-of-prime</h2>
+<p>If p is an odd prime and e &gt;= 1, then the congruence</p>
+<pre><code>x**2 === 1   (mod p**e)
+</code></pre>
+<p>has only two solutions, x = 1 and x = -1, which is the trivial solution.</p>
+<p>See proof from book. The contrapositive of the theorem says that if there
+exists a nontrivial square root of 1, modulo n, then n is either composite or
+n is 2. It can be shown that x**2 === 1  (mod 2), has just the trivial
+solution. So n must be composite, not 2.</p>
+<h2 id="modular-exponentiation---me">Modular Exponentiation - (ME)</h2>
+<p>Want to find</p>
+<pre><code>a ** x  (mod n)   ??
+</code></pre>
+<p>Use the efficient modular exponentiation algorithm to do it fast.</p>
+<p>The schoolbook multiplication algorithm will take x multiplications. If x is a
+1024 bit number, it might require 2**1024 - 1 multiplications in the worst
+case. The ModularExponentiation algorithm makes the number of multiplications
+come down from O(x) to O(ceil(lg(x+1))). That&rsquo;s a huge improvement.</p>
+<p>See CLRS for the algorithm, pretty simple. Python impl is in the file. There&rsquo;s
+some theorems which are the ones used in the Miller-Rabin primality test.</p>
+<h2 id="rsa-public-key-cryptosystem">RSA public-key cryptosystem</h2>
+<p>Relies on the dramatic difference between the ease of finding large prime
+numbers and the difficulty of factoring the product of two large prime numbers.</p>
+<p>Can find large primes using Miller-Rabin primality test. First goal of mine
+here is to distinguish between encryption and authentication, since RSA can
+make the distinction blurry.</p>
+<p>Here&rsquo;s the premise. In a communication setting, a message has two particular
+attributes that we want to authenticate. The message contents and the message
+sender. RSA can be used to authenticate both. Let the secret key and public
+key for Alice be S_a and P_a. She wants to send a message M to Bob. She needs
+to ensure that Bob will be able to tell that the message, if he receives it
+untampered, was from Alice. I will have to define what kind of tampering can
+be done by Eve. But first let&rsquo;s see what info Alice will send.</p>
+<p>She will generate a digital signature of the message, sig = S_a(M). Then send
+the pair (M, sig) to Bob. Bob&rsquo;s job is to receive a pair (M', sig') and
+compute</p>
+<pre><code>M' == P_a(sig') ?
+</code></pre>
+<p>Certainly if sig' = S_a(M), then P_a(sig') = M. And if M' = M, then the
+equality is satisfied.</p>
+<p>Tampering can be done by Eve if she injects a pair (M', sig') such that</p>
+<pre><code>(M' != M) or (sig' != sig)
+</code></pre>
+<p>Clearly if exactly one of M' and sig' disagrees, then the test by Bob will
+fail. The probability of two different signatures having the same result on
+applying P_a is impossible since P_a is injective.</p>
+<p>Even if both are altered, there&rsquo;s virtually no choice of M' and sig' the test
+that will make P_a(sig') = M'. The reason is, if Eve wants to send the message
+M' != M, she must compute the inverse of P_a, i.e S_a, to send a suitable
+sig', which is computationally infeasible. The message M that Alice sends
+needs to contain her id or something, so that Bob knows that the message has
+to be authenticated with P_a.</p>
+<h2 id="rsa-key-generation">RSA key generation</h2>
+<ul>
+<li>
+<p>Select at random two large prime numbers p and q (1024 bits perhaps?)</p>
+</li>
+<li>
+<p>Compute n = pq</p>
+</li>
+<li>
+<p>Select a small odd integer e that is relatively prime to Phi(n) =
+(p-1)(q-1).</p>
+</li>
+<li>
+<p>Compute d, the multiplicative inverse of e modulo Phi(n). Remember, d does
+exist and is unique, as said in the corollary</p>
+<ul>
+<li>If n &gt; 1, and gcd(a, n) = 1, then a x === 1 (mod n) has exactly
+one solution if it exists, otherwise it has no solution. (Well, wait.
+What if d doesn&rsquo;t exist?)</li>
+</ul>
+</li>
+<li>
+<p>P = (e, n) is the public key</p>
+</li>
+<li>
+<p>S = (d, n) is the private key</p>
+</li>
+</ul>
+<h2 id="rsa-proof-of-correctness">RSA proof of correctness</h2>
+<pre><code>C = P(M) = M**e mod n
+M = S(C) = C**d mod n
+</code></pre>
+<p>We have,
+P(S(M))
+= S(P(M))
+= (M**e mod n)<strong>d mod n
+= M</strong>(ed) (mod n)        (This equality can be proven using the
+binomial theorem)</p>
+<p>We also have,</p>
+<pre><code>ed === 1  (mod Phi(n))
+or ed === 1  (mod (p-1)(q-1))
+or ed = 1 + k*(p-1)(q-1)      (for some k)
+</code></pre>
+<p>So, we can write this</p>
+<pre><code>M**ed   ===     M.(M**(p-1))**k(q-1)    (mod p)  (yeah, notice p, not n)
+        ===     M.(1)**k(q - 1)         (mod p)  (Fermat's little theorem)
+        ===     M  (mod p)
+</code></pre>
+<p>Similary M**ed === M (mod q). By the corollary to TCRT, we have</p>
+<pre><code>M**ed   ===     M  (mod pq)
+        ===     M  (mod n)     QED.
+</code></pre>
+<h2 id="primality-testing">Primality testing</h2>
+<p>It&rsquo;s easier to check if a number is prime or not, than to find its prime
+factorization. Deciding whether a number is prime or not can be done in
+polynomial time using the AKS algorithm. However, CLRS presents a faster
+probabilistic algorithm that has the possibility of returning a false
+positive. Let&rsquo;s investigate.</p>
+<p>We use two theorems. The solution to the congruence</p>
+<pre><code>x**2 === 1  (mod n)
+</code></pre>
+<p>is non-trival i.e something other than 1 and -1, if n is prime. Hence,</p>
+<pre><code>x**2 === 1  (mod n) has non-trivial solution
+	=&gt; n is composite
+</code></pre>
+<p>The second theorem is, well, Fermat&rsquo;s little theorem which says</p>
+<pre><code>a**(n - 1) !== 1  (mod n), for some a &gt; 0
+	=&gt;	n is composite
+</code></pre>
+<p>These two theorems are used to test if the input n is a composite number or
+not. This is not what out actual aim is. We want to test if n is prime or not.
+One of probabilistic algorithm with a not-too-bad error rate just fixes a = 2,
+and tests if a**(n - 1) == (mod n). If not, then it is certainly composite as
+per the second theorem. If yes, then there&rsquo;s a very good chance that n is a
+prime. We could check for other values of a like a = 3, 4, &hellip;, n - 1. But
+still, there do exist composite numbers that will satisfy a**(n - 1) == 1 (mod
+n), making the converse of the second implication false in general. Such
+numbers are rare. What Miller-Rabin does is use the first theorem to reduce
+the probability of a false positive even more. I think I will see the
+algorithm from the book.</p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr>⚡️
+	2021  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+
+
+</div>
+    </body>
+</html>

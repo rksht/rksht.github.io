@@ -6,9 +6,10 @@
 <meta property="og:description" content="This is not inheritance.
 type GitGudder interface { GitGud() } type BaseStruct struct { // whatever } func (b *BaseStruct) GitGud() { // meh } type MyStruct struct { BaseStruct number int }  This is not inheritance. Although MyStruct implements the GitGudder interface, the BaseStruct in MyStruct knows nothing about the other fields in MyStruct. So it truly is composition. The GitGud() method on BaseStruct takes a pointer to BaseStruct, not MyStruct." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://rksht.github.io/posts/go/" />
-<meta property="article:published_time" content="2020-01-12T06:57:03+05:30" />
-<meta property="article:modified_time" content="2020-01-12T06:57:03+05:30" />
+<meta property="og:url" content="https://rksht.github.io/posts/go/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-01-12T06:57:03&#43;05:30" />
+<meta property="article:modified_time" content="2020-01-12T06:57:03&#43;05:30" />
+
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="Go ramblings"/>
 <meta name="twitter:description" content="This is not inheritance.
@@ -71,20 +72,20 @@ type GitGudder interface { GitGud() } type BaseStruct struct { // whatever } fun
 		<section class="body">
 			<p>This is not inheritance.</p>
 <pre><code>type GitGudder interface {
-    GitGud()
+	GitGud()
 }
 
 type BaseStruct struct {
-    // whatever
+	// whatever
 }
 
 func (b *BaseStruct) GitGud() {
-    // meh
+	// meh
 }
 
 type MyStruct struct {
-    BaseStruct
-    number int
+	BaseStruct
+	number int
 }
 </code></pre>
 <p>This is not inheritance. Although <code>MyStruct</code> implements the <code>GitGudder</code>
@@ -108,17 +109,17 @@ the <code>GitGud</code>() interface?</p>
 <p>You don&rsquo;t need to downcast, instead just use the GitGudder interface but
 extend the interface to have a <code>GetBaseStruct</code> method:</p>
 <pre><code>type GitGudder interface {
-    GitGud()
-    GitSuperGud()
-    GetBaseStruct() *BaseStruct
+	GitGud()
+	GitSuperGud()
+	GetBaseStruct() *BaseStruct
 }
 </code></pre>
 <p>You need to implement GetBaseStruct() for every specific struct that you want
 to comply with GitGudder. Some chore.</p>
 <pre><code>func UseBaseStructAndGitGudder(gud GitGudder) int {
-    base := gud.GetBaseStruct()
+	base := gud.GetBaseStruct()
 
-    return base.GitGud() + gud.GetSuperGud() // Maybe your function is much more complex than just the `+` operator
+	return base.GitGud() + gud.GetSuperGud() // Maybe your function is much more complex than just the `+` operator
 }
 </code></pre>
 <h2 id="networking-with-code-that-looks-synchronous-but-is-actually-asynchronous">Networking with code that looks synchronous but is actually asynchronous</h2>
@@ -126,12 +127,12 @@ to comply with GitGudder. Some chore.</p>
 to write a loop that responds to event completion. If performance and number
 of pthreads were not a concern, simply write</p>
 <pre><code>while True:
-    event = epoll()
+	event = epoll()
 
-    # get_event_context retrieves the event context from some global map of event -&gt; saved state
-    context = get_event_context(event) 
+	# get_event_context retrieves the event context from some global map of event -&gt; saved state
+	context = get_event_context(event) 
 
-    context.call_handler_for_event(event)
+	context.call_handler_for_event(event)
 </code></pre>
 <p>The context <em>is</em> the stack state needed to resume handling the connection or
 whatever IO is being handled.</p>
@@ -144,10 +145,10 @@ event we would be blocked on if we were using C and epoll directly. We write
 code that looks synchronous as usual without manually saving state in between
 blocking calls.</p>
 <pre><code>func do_some_io() {
-    f := dial(&quot;some address&quot;)
-    d = f.recv()
-    process_data(d)
-    f.send(&quot;some value&quot;)
+	f := dial(&quot;some address&quot;)
+	d = f.recv()
+	process_data(d)
+	f.send(&quot;some value&quot;)
 }
 </code></pre>
 <p>Now, dial, recv, and send are IO calls, that can block. But if we run the
@@ -179,7 +180,7 @@ design with a constant number of OS threads - usually that number of threads is
 </main>
 <footer>
 <hr>⚡️
-	2020  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+	2021  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
 </footer>
 
 

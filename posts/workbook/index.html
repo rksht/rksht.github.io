@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html><head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Workbook - This</title><meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="Workbook" />
+<meta property="og:description" content="Conv Net notes F = the filter matrix I = the image matrix In 1D, if filter size is n (which should be odd) and we want to know the convolved output at location i. Then conv(i) = sum_{f = 0 to n-1} Filter[f] * Image[f - (n-1)/2 &#43; i]
+This is actually cross correlate op not quite convolution op.
+How to set the neural net layer
+An observation - You want to find the grad of the global relative to the parameters of the sub-node functions." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://rksht.github.io/posts/workbook/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2021-05-03T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-05-03T00:00:00&#43;00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Workbook"/>
+<meta name="twitter:description" content="Conv Net notes F = the filter matrix I = the image matrix In 1D, if filter size is n (which should be odd) and we want to know the convolved output at location i. Then conv(i) = sum_{f = 0 to n-1} Filter[f] * Image[f - (n-1)/2 &#43; i]
+This is actually cross correlate op not quite convolution op.
+How to set the neural net layer
+An observation - You want to find the grad of the global relative to the parameters of the sub-node functions."/>
+
+	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" media="screen" href="https://rksht.github.io/css/main.css" />
+
+	<script
+  type="text/javascript"
+  async
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"
+>
+  MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+  });
+  MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+
+  MathJax.Hub.Config({
+  
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+  });
+</script>
+
+</head><body>
+        <div class="content"><header>
+	<div class="main">
+		<a href="https://rksht.github.io">This</a>
+	</div>
+	<nav>
+		
+	</nav>
+</header>
+
+<main>
+	<article>
+		<div class="title">
+			<h1 class="title">Workbook</h1>
+			<div class="meta">Posted on May 3, 2021</div>
+		</div>
+		
+
+		<section class="body">
+			<h2 id="conv-net-notes">Conv Net notes</h2>
+<pre><code>F = the filter matrix
+I = the image matrix
+</code></pre><p>In 1D, if filter size is <code>n</code> (which should be odd) and we want to know the
+convolved output at location <code>i</code>. Then <code>conv(i) = sum_{f = 0 to n-1} Filter[f] * Image[f - (n-1)/2 + i]</code></p>
+<p>This is actually cross correlate op not quite convolution op.</p>
+<p>How to set the neural net layer</p>
+<p>An observation - You want to find the grad of the global relative to the
+parameters of the sub-node functions. You don&rsquo;t want to calculate the grad of
+the global relative to the function itself as the main goal.</p>
+<p>The dense linear layer can be represented as a matrix of weights. Each row
+vector representing the weight vector of the &ldquo;linear node&rdquo; that we could
+implement in the non vectorized network.</p>
+<p>Consider the linear layer represented like so</p>
+<p>$$
+\begin{bmatrix}
+\leftarrow &amp; \vec{w_0} &amp; \rightarrow \<br>
+\leftarrow &amp; \vec{w_1} &amp; \rightarrow \<br>
+&amp; \vdots \<br>
+\leftarrow &amp; \vec{w_n} &amp; \rightarrow
+\end{bmatrix}
+$$</p>
+<p>Each $\vec{w_i}$ is the vector of weights of the $i$-th linear node. If we want to get the gradient of the linear layer as a whole relative to the parameters, it&rsquo;s simply</p>
+<p>$$
+\begin{bmatrix}
+\vec{x} &amp; \vec{x} &amp; \dots &amp; \vec{x}
+\end{bmatrix}
+$$</p>
+<p>As each linear node takes the same inputs (as per dense layer convention), the
+gradient is same for all the linear nodes and that is the input vector. So as a
+whole, the gradient of the linear layer is just $n$ copies of the input
+vectors.</p>
+<h2 id="formalizing-the-terms-used-in-a-neural-net">Formalizing the terms used in a neural net</h2>
+<p><strong>Root</strong> - The root is just the last layer.</p>
+<p><strong>Layer</strong> - Currently I think a single layer should be the following function $A \circ M$ where $A$ is the activation function of the layer and $M$ is the linear threshold function. The evaluated value of a layer we write using $\text{layer}_n = A_n (M_n (\ldots \text{the previous layers} \ldots))$</p>
+<p><strong>Function notation</strong> - Suppose we have a 2-deep network of the form</p>
+<p>$$
+F(x) = \text{relu}_2(\text{linear}_2(\text{relu}_1(\text{linear}_1(x))))
+$$</p>
+<p>In our naming scheme, we use</p>
+<p>$$
+F(x) = A_2(M_2(A_1(M_1(x))))
+$$</p>
+<p>Let the weight matrix of $M_n$ be simply called $W_n$</p>
+<p>If we want the gradient of $F$ wrt $M_2$&rsquo;s weights, it&rsquo;s as simple as $d(A_2, M_2) \bigotimes D(M_2, W_2)$. Here $\vec a\bigotimes M$ denotes multiplying each row of a matrix $M$ by the corresponding component scalars of a vector $a$.</p>
+<p>We know that $D(M_n, W_n) = \text{vstack}<em>{s_n}(L</em>{n-1})$, where $s_n$ is the output size of layer $n$. i.e. the matrix height.</p>
+<p>But the gradient of $F$ wrt $M_1$&rsquo;s weights is a bit more complex to write an expression for. The chain rule can be used as we write</p>
+<p>$$
+d(A_2, M_2) \bigotimes D(M_2, A_1) \bigotimes d(A_1, M_1) \bigotimes D(M_1, L_0)
+$$</p>
+<p>We can use some identities. $D(M_n, \text{input to } M_n) = W_n$</p>
+<p>We can then simplify the expression and write</p>
+<p>$$
+D(A_2, W_2) \cdot \text{weights}(W_2) \cdot D(A_1, W_1) \cdot \text{layer}_0
+$$</p>
+<p>And $\text{layer}_0 = x$ the input vector.</p>
+<p>But we need to clarify the multiplication operators. They are not the same.
+Since a single activation node just takes a scalar input i.e. the output of one
+of the rows of the linear layer matrix, all the $\bigotimes$ operator does is
+multiply the local derivative of $A_i$ with the $i$-th row of the Jacobian
+$D(M_2, A_1)$</p>
+<p>Looking at the above expression for $D(F, W_1)$, we see two such
+multiplications. Now to see the multiplication $D(M_2, A_1) \bigotimes d(A_1,
+M_1)$</p>
+
+		</section>
+
+		<div class="post-tags">
+			
+			
+			
+		</div>
+	</article>
+</main>
+<footer>
+<hr>⚡️
+	2021  <a href="https://github.com/athul/archie">Archie Theme</a> | Built with <a href="https://gohugo.io">Hugo</a>
+</footer>
+
+
+
+
+</div>
+    </body>
+</html>
