@@ -5,8 +5,7 @@
 	<meta property="og:title" content="Workbook" />
 <meta property="og:description" content="Conv Net notes F = the filter matrix I = the image matrix In 1D, if filter size is n (which should be odd) and we want to know the convolved output at location i. Then conv(i) = sum_{f = 0 to n-1} Filter[f] * Image[f - (n-1)/2 &#43; i]
 This is actually cross correlate op not quite convolution op.
-How to set the neural net layer
-An observation - You want to find the grad of the global relative to the parameters of the sub-node functions." />
+How to set the neural net layer An observation - You want to find the grad of the global relative to the parameters of the sub-node functions." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://rksht.github.io/posts/workbook/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2021-05-03T00:00:00&#43;00:00" />
@@ -16,8 +15,7 @@ An observation - You want to find the grad of the global relative to the paramet
 <meta name="twitter:title" content="Workbook"/>
 <meta name="twitter:description" content="Conv Net notes F = the filter matrix I = the image matrix In 1D, if filter size is n (which should be odd) and we want to know the convolved output at location i. Then conv(i) = sum_{f = 0 to n-1} Filter[f] * Image[f - (n-1)/2 &#43; i]
 This is actually cross correlate op not quite convolution op.
-How to set the neural net layer
-An observation - You want to find the grad of the global relative to the parameters of the sub-node functions."/>
+How to set the neural net layer An observation - You want to find the grad of the global relative to the parameters of the sub-node functions."/>
 
 	<link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
@@ -80,7 +78,7 @@ I = the image matrix
 </code></pre><p>In 1D, if filter size is <code>n</code> (which should be odd) and we want to know the
 convolved output at location <code>i</code>. Then <code>conv(i) = sum_{f = 0 to n-1} Filter[f] * Image[f - (n-1)/2 + i]</code></p>
 <p>This is actually cross correlate op not quite convolution op.</p>
-<p>How to set the neural net layer</p>
+<h2 id="how-to-set-the-neural-net-layer">How to set the neural net layer</h2>
 <p>An observation - You want to find the grad of the global relative to the
 parameters of the sub-node functions. You don&rsquo;t want to calculate the grad of
 the global relative to the function itself as the main goal.</p>

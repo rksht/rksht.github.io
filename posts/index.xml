@@ -15,8 +15,7 @@
       <guid>https://rksht.github.io/posts/workbook/</guid>
       <description>Conv Net notes F = the filter matrix I = the image matrix In 1D, if filter size is n (which should be odd) and we want to know the convolved output at location i. Then conv(i) = sum_{f = 0 to n-1} Filter[f] * Image[f - (n-1)/2 + i]
 This is actually cross correlate op not quite convolution op.
-How to set the neural net layer
-An observation - You want to find the grad of the global relative to the parameters of the sub-node functions.</description>
+How to set the neural net layer An observation - You want to find the grad of the global relative to the parameters of the sub-node functions.</description>
     </item>
     
     <item>
